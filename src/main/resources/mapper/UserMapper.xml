@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.ssmspringboot2.dao.UserMapper" >
-
-    <select id="selectUserByName"  resultType="User">
-        SELECT * FROM user WHERE username = #{name}
-    </select>
-    <select id="selectUserByID" resultType="User">
-        SELECT * FROM user WHERE id = #{id}
-    </select>
-    <select id="selectAllUser" resultType="User">
-        SELECT * FROM user
+<mapper namespace="com.example.ssmspringboot2.dao.PokemonMapper" >
+    <resultMap id="PokemonResult" type="Pokemon">
+        <id property="id" column="id"/>
+        <result property="order" column="order"/>
+        <result property="height" column="height"/>
+        <result property="weight" column="weight"/>
+        <result property="base_experience" column="base_experience"/>
+        <result property="is_default" column="is_default"/>
+        <result property="pokemon_species_id" column="pokemon_species_id"/>
+        <result property="name" column="name"/>
+        <collection property="pokemonTypes" resultMap="pokemonTypeResult"/>
+    </resultMap>
+    <resultMap id="pokemonTypeResult" type="PokemonType">
+        <id property="id" column="pokemonTypeId"/>
+        <result property="slot" column="slot"/>
+        <result property="pokemon_id" column="pokemon_id"/>
+        <result property="type_id" column="type_id"/>
+        <association property="type" resultMap="TypeResult"/>
+    </resultMap>
+    <resultMap id="TypeResult" type="Type">
+        <id property="id" column="typeId"/>
+        <result property="generation_id" column="generation_id"/>
+        <result property="move_damage_class_id" column="move_damage_class_id"/>
+        <result property="name" column="typeName"/>
+    </resultMap>
+    <select id="selectPokemonByID" resultMap="PokemonResult">
+        SELECT
+            A.*,
+            B.id as pokemonTypeId,
+            B.slot,
+            B.pokemon_id,
+            B.type_id,
+            C.id as typeId,
+            C.generation_id,
+            C.move_damage_class_id,
+            C.name as typeName
+        FROM pokemon_v2_pokemon A LEFT JOIN pokemon_v2_pokemontype B ON A.id = B.pokemon_id
+            LEFT JOIN pokemon_v2_type C on B.type_id = C.id
+        WHERE A.id = #{id}
     </select>
 
 </mapper>
