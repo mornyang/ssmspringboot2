@@ -9,7 +9,7 @@ public class Pokemon {
     private Integer weight;
     private Integer base_experience;
     private Boolean is_default;
-    private Integer pokemon_species_id;
+    //private Integer pokemon_species_id;
     private String name;
     private List<PokemonType> pokemonTypes;
 
@@ -69,13 +69,13 @@ public class Pokemon {
         this.is_default = is_default;
     }
 
-    public Integer getPokemon_species_id() {
+    /*public Integer getPokemon_species_id() {
         return pokemon_species_id;
     }
 
     public void setPokemon_species_id(Integer pokemon_species_id) {
         this.pokemon_species_id = pokemon_species_id;
-    }
+    }*/
 
     public String getName() {
         return name;
@@ -94,7 +94,7 @@ public class Pokemon {
                 ", weight=" + weight +
                 ", base_experience=" + base_experience +
                 ", is_default=" + is_default +
-                ", pokemon_species_id=" + pokemon_species_id +
+                //", pokemon_species_id=" + pokemon_species_id +
                 ", name='" + name + '\'' +
                 '}';
     }
