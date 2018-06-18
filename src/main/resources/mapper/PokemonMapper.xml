@@ -17,9 +17,9 @@
         <result property="slot" column="slot"/>
         <result column="pokemon_id"/>
         <result column="type_id"/>
-        <association property="type" resultMap="TypeResult"/>
+        <association property="link" resultMap="TypeResult"/>
     </resultMap>
-    <resultMap id="TypeResult" type="Type">
+    <resultMap id="TypeResult" type="Link">
         <id property="url" column="typeId"/>
         <result column="generation_id"/>
         <result column="move_damage_class_id"/>

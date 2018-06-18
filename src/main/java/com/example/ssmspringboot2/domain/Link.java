@@ -2,7 +2,7 @@ package com.example.ssmspringboot2.domain;
 
 import com.example.ssmspringboot2.util.Util;
 
-public class Type {
+public class Link {
     private String name;
     private String url;
 
@@ -19,6 +19,14 @@ public class Type {
     }
 
     public void setUrl(String url) throws Exception{
-        this.url = Util.getIPAddress()+"/api/type/"+url;
+        this.url = Util.parseUrl("type", url);
+    }
+
+    @Override
+    public String toString(){
+        return "Link{" +
+                "name=" + name +
+                ", url=" + url +
+                "}";
     }
 }

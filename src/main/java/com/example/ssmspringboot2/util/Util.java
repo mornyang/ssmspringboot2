@@ -8,4 +8,8 @@ public class Util {
         String hostAddress = address.getHostAddress();
         return "http://"+hostAddress + ':' + Constant.port;
     }
+
+    public static String parseUrl(String tag, String id) throws Exception {
+        return getIPAddress()+"/api/"+tag+"/"+id;
+    }
 }

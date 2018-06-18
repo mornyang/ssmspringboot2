@@ -19,4 +19,12 @@ public class TypeDetail {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public String toString(){
+        return "TypeDetail{" +
+                "name=" + name +
+                ", id=" + id +
+                "}";
+    }
 }
