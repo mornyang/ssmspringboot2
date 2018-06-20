@@ -2,10 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.ssmspringboot2.dao.TypeMapper">
     <resultMap id="typeResult" type="TypeDetail">
-        <id property="id" column="id"/>
-        <result property="name" column="name"/>
+        <id property="id" column="typeID"/>
+        <result property="name" column="typeName"/>
+        <association property="generation" javaType="Generation">
+            <id property="url" column="generationID"/>
+            <result property="name" column="generationName"/>
+        </association>
     </resultMap>
     <select id="selectTypeByID" resultMap="typeResult">
-        select * from pokemon_v2_type where id = #{id}
+        SELECT
+          A.id as typeID,
+          A.name as typeName,
+          A.generation_id,
+          B.id as generationID,
+          B.name as generationName
+        FROM
+          pokemon_v2_type A LEFT JOIN pokemon_v2_generation B ON A.generation_id = B.id
+        WHERE A.id = #{id}
     </select>
 </mapper>

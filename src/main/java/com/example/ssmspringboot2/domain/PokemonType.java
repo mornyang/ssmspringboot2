@@ -2,7 +2,7 @@ package com.example.ssmspringboot2.domain;
 
 public class PokemonType {
     private Integer slot;
-    private Link link;
+    private Type type;
 
     public Integer getSlot() {
         return slot;
@@ -12,19 +12,19 @@ public class PokemonType {
         this.slot = slot;
     }
 
-    public Link getLink() {
-        return link;
+    public Type getType() {
+        return type;
     }
 
-    public void setLink(Link link) {
-        this.link = link;
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return "PokemonType{" +
-                ", slot=" + slot  +
-                ", link=" + link +
+                ", slot=" + slot +
+                ", link=" + type +
                 '}';
     }
 }

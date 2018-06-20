@@ -3,6 +3,7 @@ package com.example.ssmspringboot2.domain;
 public class TypeDetail {
     private String name;
     private Integer id;
+    private Generation generation;
 
     public String getName() {
         return name;
@@ -20,8 +21,16 @@ public class TypeDetail {
         this.id = id;
     }
 
+    public Generation getGeneration() {
+        return generation;
+    }
+
+    public void setGeneration(Generation generation) {
+        this.generation = generation;
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return "TypeDetail{" +
                 "name=" + name +
                 ", id=" + id +

@@ -10,34 +10,75 @@
         <result property="is_default" column="is_default"/>
         <!--<result property="pokemon_species_id" column="pokemon_species_id"/>-->
         <result property="name" column="name"/>
+        <association property="sprites" javaType="Sprites">
+            <id column="spritesId"/>
+            <result property="sprite" column="sprites"/>
+        </association>
         <collection property="pokemonTypes" resultMap="pokemonTypeResult"/>
+        <collection property="pokemonStats" resultMap="pokemonStatResult"/>
+        <collection property="pokemonAbilities" resultMap="pokemonAbilitiesResult"/>
     </resultMap>
     <resultMap id="pokemonTypeResult" type="PokemonType">
         <id column="pokemonTypeId"/>
-        <result property="slot" column="slot"/>
+        <result property="slot" column="pokemonTypeSlot"/>
         <result column="pokemon_id"/>
         <result column="type_id"/>
-        <association property="link" resultMap="TypeResult"/>
+        <association property="type" javaType="Type">
+            <id property="url" column="typeId"/>
+            <result property="name" column="typeName"/>
+        </association>
     </resultMap>
-    <resultMap id="TypeResult" type="Link">
-        <id property="url" column="typeId"/>
-        <result column="generation_id"/>
-        <result column="move_damage_class_id"/>
-        <result property="name" column="typeName"/>
+    <resultMap id="pokemonStatResult" type="PokemonStats">
+        <id column="pokemonStatId"/>
+        <result property="effort" column="effort"/>
+        <result property="base_stat" column="base_stat"/>
+        <association property="stat" javaType="Stat">
+            <id property="url" column="statId"/>
+            <result property="name" column="statName"/>
+        </association>
+    </resultMap>
+    <resultMap id="pokemonAbilitiesResult" type="PokemonAbility">
+        <id column="pokemonAbilityId"/>
+        <result property="slot" column="pokemonAbilitySlot"/>
+        <result property="is_hidden" column="is_hidden"/>
+        <association property="ability" javaType="Ability">
+            <id property="url" column="abilityId"/>
+            <result property="name" column="abilityName"/>
+        </association>
     </resultMap>
     <select id="selectPokemonByID" resultMap="PokemonResult">
         SELECT
             A.*,
             B.id as pokemonTypeId,
-            B.slot,
+            B.slot as pokemonTypeSlot,
             B.pokemon_id,
             B.type_id,
             C.id as typeId,
-            C.generation_id,
-            C.move_damage_class_id,
-            C.name as typeName
+            C.name as typeName,
+            D.id as pokemonStatId,
+            D.base_stat,
+            D.effort,
+            D.stat_id,
+            E.id as statId,
+            E.name as statName,
+            F.id as pokemonAbilityId,
+            F.slot as pokemonAbilitySlot,
+            F.is_hidden,
+            F.ability_id,
+            G.id as abilityId,
+            G.name as abilityName,
+            H.id as pokemonFormId,
+            H.name as pokemonFormName,
+            I.id as spritesId,
+            I.sprites
         FROM pokemon_v2_pokemon A LEFT JOIN pokemon_v2_pokemontype B ON A.id = B.pokemon_id
             LEFT JOIN pokemon_v2_type C on B.type_id = C.id
+            LEFT JOIN pokemon_v2_pokemonstat D ON A.id = D.pokemon_id
+            LEFT JOIN pokemon_v2_stat E ON D.stat_id = E.id
+            LEFT JOIN pokemon_v2_pokemonability F ON A.id = F.pokemon_id
+            LEFT JOIN pokemon_v2_ability G ON F.ability_id = G.id
+            LEFT JOIN pokemon_v2_pokemonform H ON A.id = H.pokemon_id
+            LEFT JOIN pokemon_v2_pokemonsprites I ON A.id = I.pokemon_id
         WHERE A.id = #{id}
     </select>
 

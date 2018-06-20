@@ -1,8 +1,9 @@
 package com.example.ssmspringboot2.domain;
 
+import com.example.ssmspringboot2.util.Constant;
 import com.example.ssmspringboot2.util.Util;
 
-public class Link {
+public class PokemonForm {
     private String name;
     private String url;
 
@@ -19,14 +20,6 @@ public class Link {
     }
 
     public void setUrl(String url) throws Exception{
-        this.url = Util.parseUrl("type", url);
-    }
-
-    @Override
-    public String toString(){
-        return "Link{" +
-                "name=" + name +
-                ", url=" + url +
-                "}";
+        this.url = Util.parseUrl(Constant.pokemonForm, url);
     }
 }

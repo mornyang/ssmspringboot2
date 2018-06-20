@@ -3,7 +3,7 @@ package com.example.ssmspringboot2.domain;
 import com.example.ssmspringboot2.util.Constant;
 import com.example.ssmspringboot2.util.Util;
 
-public class Generation {
+public class Stat {
     private String name;
     private String url;
 
@@ -20,14 +20,6 @@ public class Generation {
     }
 
     public void setUrl(String url) throws Exception{
-        this.url = Util.parseUrl(Constant.pokemonGeneration, url);
-    }
-
-    @Override
-    public String toString(){
-        return "Generation{" +
-                "name=" + name +
-                ", url=" + url +
-                "}";
+        this.url = Util.parseUrl(Constant.pokemonStat, url);
     }
 }

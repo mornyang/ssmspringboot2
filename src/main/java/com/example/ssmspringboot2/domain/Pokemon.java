@@ -12,6 +12,10 @@ public class Pokemon {
     //private Integer pokemon_species_id;
     private String name;
     private List<PokemonType> pokemonTypes;
+    private List<PokemonStats> pokemonStats;
+    private List<PokemonAbility> pokemonAbilities;
+    private List<PokemonForm> pokemonForms;
+    private Sprites sprites;
 
     public List<PokemonType> getPokemonTypes() {
         return pokemonTypes;
@@ -83,6 +87,38 @@ public class Pokemon {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<PokemonStats> getPokemonStats() {
+        return pokemonStats;
+    }
+
+    public void setPokemonStats(List<PokemonStats> pokemonStats) {
+        this.pokemonStats = pokemonStats;
+    }
+
+    public List<PokemonAbility> getPokemonAbilities() {
+        return pokemonAbilities;
+    }
+
+    public void setPokemonAbilities(List<PokemonAbility> pokemonAbilities) {
+        this.pokemonAbilities = pokemonAbilities;
+    }
+
+    public List<PokemonForm> getPokemonForms() {
+        return pokemonForms;
+    }
+
+    public void setPokemonForms(List<PokemonForm> pokemonForms) {
+        this.pokemonForms = pokemonForms;
+    }
+
+    public Sprites getSprites() {
+        return sprites;
+    }
+
+    public void setSprites(Sprites sprites) {
+        this.sprites = sprites;
     }
 
     @Override
