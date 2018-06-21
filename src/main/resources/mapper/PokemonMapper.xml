@@ -10,13 +10,11 @@
         <result property="is_default" column="is_default"/>
         <!--<result property="pokemon_species_id" column="pokemon_species_id"/>-->
         <result property="name" column="name"/>
-        <association property="sprites" javaType="Sprites">
-            <id column="spritesId"/>
-            <result property="sprite" column="sprites"/>
-        </association>
+        <result property="sprites" column="sprites" javaType="Sprites" typeHandler="com.example.ssmspringboot2.util.JsonTypeHandler"/>
         <collection property="pokemonTypes" resultMap="pokemonTypeResult"/>
         <collection property="pokemonStats" resultMap="pokemonStatResult"/>
         <collection property="pokemonAbilities" resultMap="pokemonAbilitiesResult"/>
+        <collection property="pokemonForms" resultMap="pokemonFormResult"/>
     </resultMap>
     <resultMap id="pokemonTypeResult" type="PokemonType">
         <id column="pokemonTypeId"/>
@@ -45,6 +43,10 @@
             <id property="url" column="abilityId"/>
             <result property="name" column="abilityName"/>
         </association>
+    </resultMap>
+    <resultMap id="pokemonFormResult" type="PokemonForm">
+        <id property="url" column="pokemonFormId"/>
+        <result property="name" column="pokemonFormName"/>
     </resultMap>
     <select id="selectPokemonByID" resultMap="PokemonResult">
         SELECT

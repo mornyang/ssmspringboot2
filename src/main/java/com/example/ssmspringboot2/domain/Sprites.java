@@ -3,7 +3,7 @@ package com.example.ssmspringboot2.domain;
 import com.alibaba.fastjson.JSONObject;
 
 public class Sprites {
-    private JSONObject sprite;
+    /*private JSONObject sprite;
 
     public JSONObject getSprite() {
         return sprite;
@@ -11,9 +11,9 @@ public class Sprites {
 
     public void setSprite(JSONObject sprite) {
         this.sprite = sprite;
-    }
+    }*/
 
-    /*private String back_female;
+    private String back_female;
     private String back_shiny_female;
     private String back_default;
     private String front_female;
@@ -84,5 +84,5 @@ public class Sprites {
 
     public void setFront_shiny(String front_shiny) {
         this.front_shiny = front_shiny;
-    }*/
+    }
 }
