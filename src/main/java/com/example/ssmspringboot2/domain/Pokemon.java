@@ -16,6 +16,8 @@ public class Pokemon {
     private List<PokemonAbility> pokemonAbilities;
     private List<PokemonForm> pokemonForms;
     private Sprites sprites;
+    private Species species;
+    private List<PokemonMove> pokemonMoves;
 
     public List<PokemonType> getPokemonTypes() {
         return pokemonTypes;
@@ -119,6 +121,22 @@ public class Pokemon {
 
     public void setSprites(Sprites sprites) {
         this.sprites = sprites;
+    }
+
+    public Species getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(Species species) {
+        this.species = species;
+    }
+
+    public List<PokemonMove> getPokemonMoves() {
+        return pokemonMoves;
+    }
+
+    public void setPokemonMoves(List<PokemonMove> pokemonMoves) {
+        this.pokemonMoves = pokemonMoves;
     }
 
     @Override

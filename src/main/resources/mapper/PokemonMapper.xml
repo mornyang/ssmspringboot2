@@ -11,10 +11,15 @@
         <!--<result property="pokemon_species_id" column="pokemon_species_id"/>-->
         <result property="name" column="name"/>
         <result property="sprites" column="sprites" javaType="Sprites" typeHandler="com.example.ssmspringboot2.util.JsonTypeHandler"/>
+        <association property="species" javaType="Species">
+            <id property="url" column="speciesId"/>
+            <result property="name" column="speciesName"/>
+        </association>
         <collection property="pokemonTypes" resultMap="pokemonTypeResult"/>
         <collection property="pokemonStats" resultMap="pokemonStatResult"/>
         <collection property="pokemonAbilities" resultMap="pokemonAbilitiesResult"/>
         <collection property="pokemonForms" resultMap="pokemonFormResult"/>
+        <collection property="pokemonMoves" resultMap="pokemonMoveResult"/>
     </resultMap>
     <resultMap id="pokemonTypeResult" type="PokemonType">
         <id column="pokemonTypeId"/>
@@ -48,6 +53,24 @@
         <id property="url" column="pokemonFormId"/>
         <result property="name" column="pokemonFormName"/>
     </resultMap>
+    <resultMap id="pokemonMoveResult" type="PokemonMove">
+        <association property="move" javaType="Move">
+            <id property="url" column="moveId"/>
+            <result property="name" column="moveName"/>
+        </association>
+        <collection property="moveVersionGroups" resultMap="MoveVersionGroupsResult"/>
+    </resultMap>
+    <resultMap id="MoveVersionGroupsResult" type="MoveVersionGroup">
+        <result property="level_learned_at" column="level"/>
+        <association property="moveLearnMethod" javaType="MoveLearnMethod">
+            <id property="url" column="moveLearnMethodId"/>
+            <result property="name" column="moveLearnMethodName"/>
+        </association>
+        <association property="versionGroup" javaType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </association>
+    </resultMap>
     <select id="selectPokemonByID" resultMap="PokemonResult">
         SELECT
             A.*,
@@ -72,7 +95,21 @@
             H.id as pokemonFormId,
             H.name as pokemonFormName,
             I.id as spritesId,
-            I.sprites
+            I.sprites,
+            J.id as speciesId,
+            J.name as speciesName,
+            K.id,
+            K.level,
+            K.move_id,
+            K.pokemon_id,
+            K.version_group_id,
+            K.move_learn_method_id,
+            L.id as moveId,
+            L.name as moveName,
+            M.id as moveLearnMethodId,
+            M.name as moveLearnMethodName,
+            N.id as versionGroupId,
+            N.name as versionGroupName
         FROM pokemon_v2_pokemon A LEFT JOIN pokemon_v2_pokemontype B ON A.id = B.pokemon_id
             LEFT JOIN pokemon_v2_type C on B.type_id = C.id
             LEFT JOIN pokemon_v2_pokemonstat D ON A.id = D.pokemon_id
@@ -81,7 +118,11 @@
             LEFT JOIN pokemon_v2_ability G ON F.ability_id = G.id
             LEFT JOIN pokemon_v2_pokemonform H ON A.id = H.pokemon_id
             LEFT JOIN pokemon_v2_pokemonsprites I ON A.id = I.pokemon_id
+            LEFT JOIN pokemon_v2_pokemonspecies J ON A.id = J.id
+            LEFT JOIN pokemon_v2_pokemonmove K on A.id = K.pokemon_id
+            LEFT JOIN pokemon_v2_move L on K.move_id = L.id
+            LEFT JOIN pokemon_v2_movelearnmethod M ON K.move_learn_method_id = M.id
+            LEFT JOIN pokemon_v2_versiongroup N ON K.version_group_id = N.id
         WHERE A.id = #{id}
     </select>
-
 </mapper>
