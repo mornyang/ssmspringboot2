@@ -1,4 +1,4 @@
-package com.example.ssmspringboot2.domain;
+package com.example.ssmspringboot2.domain.pokemon;
 
 import com.alibaba.fastjson.JSONObject;
 

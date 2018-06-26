@@ -1,4 +1,6 @@
-package com.example.ssmspringboot2.domain;
+package com.example.ssmspringboot2.domain.pokemon;
+
+import com.example.ssmspringboot2.domain.link.Ability;
 
 public class PokemonAbility {
     private Integer slot;

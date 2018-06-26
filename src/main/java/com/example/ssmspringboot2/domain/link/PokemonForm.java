@@ -1,4 +1,4 @@
-package com.example.ssmspringboot2.domain;
+package com.example.ssmspringboot2.domain.link;
 
 import com.example.ssmspringboot2.util.Constant;
 import com.example.ssmspringboot2.util.Util;

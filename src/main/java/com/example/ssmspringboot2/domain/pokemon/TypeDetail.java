@@ -1,4 +1,6 @@
-package com.example.ssmspringboot2.domain;
+package com.example.ssmspringboot2.domain.pokemon;
+
+import com.example.ssmspringboot2.domain.link.Generation;
 
 public class TypeDetail {
     private String name;

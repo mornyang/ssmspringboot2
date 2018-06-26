@@ -1,4 +1,7 @@
-package com.example.ssmspringboot2.domain;
+package com.example.ssmspringboot2.domain.pokemon;
+
+import com.example.ssmspringboot2.domain.link.PokemonForm;
+import com.example.ssmspringboot2.domain.link.Species;
 
 import java.util.List;
 
@@ -9,7 +12,6 @@ public class Pokemon {
     private Integer weight;
     private Integer base_experience;
     private Boolean is_default;
-    //private Integer pokemon_species_id;
     private String name;
     private List<PokemonType> pokemonTypes;
     private List<PokemonStats> pokemonStats;
@@ -17,7 +19,9 @@ public class Pokemon {
     private List<PokemonForm> pokemonForms;
     private Sprites sprites;
     private Species species;
-    private List<PokemonMove> pokemonMoves;
+    private List<Move> moves;
+    private List<GameIndex> game_Indices;
+    private List<Item> items;
 
     public List<PokemonType> getPokemonTypes() {
         return pokemonTypes;
@@ -75,14 +79,6 @@ public class Pokemon {
         this.is_default = is_default;
     }
 
-    /*public Integer getPokemon_species_id() {
-        return pokemon_species_id;
-    }
-
-    public void setPokemon_species_id(Integer pokemon_species_id) {
-        this.pokemon_species_id = pokemon_species_id;
-    }*/
-
     public String getName() {
         return name;
     }
@@ -131,12 +127,28 @@ public class Pokemon {
         this.species = species;
     }
 
-    public List<PokemonMove> getPokemonMoves() {
-        return pokemonMoves;
+    public List<Move> getMoves() {
+        return moves;
     }
 
-    public void setPokemonMoves(List<PokemonMove> pokemonMoves) {
-        this.pokemonMoves = pokemonMoves;
+    public void setMoves(List<Move> moves) {
+        this.moves = moves;
+    }
+
+    public List<GameIndex> getGame_Indices() {
+        return game_Indices;
+    }
+
+    public void setGame_Indices(List<GameIndex> game_Indices) {
+        this.game_Indices = game_Indices;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     @Override

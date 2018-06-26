@@ -1,11 +1,14 @@
-package com.example.ssmspringboot2.domain;
+package com.example.ssmspringboot2.domain.pokemon;
 
 import com.example.ssmspringboot2.util.Constant;
 import com.example.ssmspringboot2.util.Util;
 
+import java.util.List;
+
 public class Move {
     private String name;
     private String url;
+    private List<MoveVersionGroup> moveVersionGroups;
 
     public String getName() {
         return name;
@@ -21,5 +24,13 @@ public class Move {
 
     public void setUrl(String url) throws Exception{
         this.url = Util.parseUrl(Constant.pokemonMove, url);
+    }
+
+    public List<MoveVersionGroup> getMoveVersionGroups() {
+        return moveVersionGroups;
+    }
+
+    public void setMoveVersionGroups(List<MoveVersionGroup> moveVersionGroups) {
+        this.moveVersionGroups = moveVersionGroups;
     }
 }

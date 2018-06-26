@@ -2,7 +2,7 @@ package com.example.ssmspringboot2.dao.impl;
 
 import com.example.ssmspringboot2.dao.PokemonMapper;
 import com.example.ssmspringboot2.dao.PokemonService;
-import com.example.ssmspringboot2.domain.Pokemon;
+import com.example.ssmspringboot2.domain.pokemon.Pokemon;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 

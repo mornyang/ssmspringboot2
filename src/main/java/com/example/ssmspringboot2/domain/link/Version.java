@@ -1,9 +1,9 @@
-package com.example.ssmspringboot2.domain;
+package com.example.ssmspringboot2.domain.link;
 
 import com.example.ssmspringboot2.util.Constant;
 import com.example.ssmspringboot2.util.Util;
 
-public class MoveLearnMethod {
+public class Version {
     private String name;
     private String url;
 
@@ -20,6 +20,6 @@ public class MoveLearnMethod {
     }
 
     public void setUrl(String url) throws Exception{
-        this.url = Util.parseUrl(Constant.moveLearnMethod, url);
+        this.url = Util.parseUrl(Constant.pokemonVersion, url);
     }
 }
