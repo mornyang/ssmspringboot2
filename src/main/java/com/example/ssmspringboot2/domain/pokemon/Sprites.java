@@ -3,15 +3,6 @@ package com.example.ssmspringboot2.domain.pokemon;
 import com.alibaba.fastjson.JSONObject;
 
 public class Sprites {
-    /*private JSONObject sprite;
-
-    public JSONObject getSprite() {
-        return sprite;
-    }
-
-    public void setSprite(JSONObject sprite) {
-        this.sprite = sprite;
-    }*/
 
     private String back_female;
     private String back_shiny_female;
@@ -84,5 +75,19 @@ public class Sprites {
 
     public void setFront_shiny(String front_shiny) {
         this.front_shiny = front_shiny;
+    }
+
+    @Override
+    public String toString() {
+        return "Sprites{" +
+                "back_female='" + back_female + '\'' +
+                ", back_shiny_female='" + back_shiny_female + '\'' +
+                ", back_default='" + back_default + '\'' +
+                ", front_female='" + front_female + '\'' +
+                ", front_shiny_female='" + front_shiny_female + '\'' +
+                ", back_shiny='" + back_shiny + '\'' +
+                ", front_default='" + front_default + '\'' +
+                ", front_shiny='" + front_shiny + '\'' +
+                '}';
     }
 }

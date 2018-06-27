@@ -33,4 +33,13 @@ public class Move {
     public void setMoveVersionGroups(List<MoveVersionGroup> moveVersionGroups) {
         this.moveVersionGroups = moveVersionGroups;
     }
+
+    @Override
+    public String toString() {
+        return "Move{" +
+                "name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", moveVersionGroups=" + moveVersionGroups +
+                '}';
+    }
 }

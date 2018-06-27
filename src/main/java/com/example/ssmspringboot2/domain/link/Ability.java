@@ -22,4 +22,12 @@ public class Ability {
     public void setUrl(String url) throws Exception{
         this.url = Util.parseUrl(Constant.pokemonAbility, url);
     }
+
+    @Override
+    public String toString() {
+        return "Ability{" +
+                "name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

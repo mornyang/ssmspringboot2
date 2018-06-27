@@ -33,4 +33,13 @@ public class Item {
     public void setVersionDetails(List<VersionDetail> versionDetails) {
         this.versionDetails = versionDetails;
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", versionDetails=" + versionDetails +
+                '}';
+    }
 }

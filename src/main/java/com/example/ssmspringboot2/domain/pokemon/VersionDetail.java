@@ -21,4 +21,12 @@ public class VersionDetail {
     public void setVersion(Version version) {
         this.version = version;
     }
+
+    @Override
+    public String toString() {
+        return "VersionDetail{" +
+                "rarity=" + rarity +
+                ", version=" + version +
+                '}';
+    }
 }

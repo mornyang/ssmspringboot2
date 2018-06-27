@@ -34,8 +34,9 @@ public class TypeDetail {
     @Override
     public String toString() {
         return "TypeDetail{" +
-                "name=" + name +
+                "name='" + name + '\'' +
                 ", id=" + id +
-                "}";
+                ", generation=" + generation +
+                '}';
     }
 }

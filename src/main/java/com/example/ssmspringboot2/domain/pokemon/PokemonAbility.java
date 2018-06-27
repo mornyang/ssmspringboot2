@@ -30,4 +30,13 @@ public class PokemonAbility {
     public void setAbility(Ability ability) {
         this.ability = ability;
     }
+
+    @Override
+    public String toString() {
+        return "PokemonAbility{" +
+                "slot=" + slot +
+                ", is_hidden=" + is_hidden +
+                ", ability=" + ability +
+                '}';
+    }
 }

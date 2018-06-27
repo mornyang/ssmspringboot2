@@ -21,4 +21,12 @@ public class GameIndex {
     public void setVersion(Version version) {
         this.version = version;
     }
+
+    @Override
+    public String toString() {
+        return "GameIndex{" +
+                "game_index=" + game_index +
+                ", version=" + version +
+                '}';
+    }
 }

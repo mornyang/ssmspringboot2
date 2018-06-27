@@ -30,4 +30,13 @@ public class PokemonStats {
     public void setBase_stat(Integer base_stat) {
         this.base_stat = base_stat;
     }
+
+    @Override
+    public String toString() {
+        return "PokemonStats{" +
+                "stat=" + stat +
+                ", effort=" + effort +
+                ", base_stat=" + base_stat +
+                '}';
+    }
 }

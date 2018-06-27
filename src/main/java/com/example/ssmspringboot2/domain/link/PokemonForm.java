@@ -22,4 +22,12 @@ public class PokemonForm {
     public void setUrl(String url) throws Exception{
         this.url = Util.parseUrl(Constant.pokemonForm, url);
     }
+
+    @Override
+    public String toString(){
+        return "Generation{" +
+                "name=" + name +
+                ", url=" + url +
+                "}";
+    }
 }

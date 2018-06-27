@@ -155,13 +155,21 @@ public class Pokemon {
     public String toString() {
         return "Pokemon{" +
                 "id=" + id +
-                ", order=" + order  +
+                ", order=" + order +
                 ", height=" + height +
                 ", weight=" + weight +
                 ", base_experience=" + base_experience +
                 ", is_default=" + is_default +
-                //", pokemon_species_id=" + pokemon_species_id +
                 ", name='" + name + '\'' +
+                ", pokemonTypes=" + pokemonTypes +
+                ", pokemonStats=" + pokemonStats +
+                ", pokemonAbilities=" + pokemonAbilities +
+                ", pokemonForms=" + pokemonForms +
+                ", sprites=" + sprites +
+                ", species=" + species +
+                ", moves=" + moves +
+                ", game_Indices=" + game_Indices +
+                ", items=" + items +
                 '}';
     }
 }

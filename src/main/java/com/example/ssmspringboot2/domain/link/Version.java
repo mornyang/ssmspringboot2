@@ -22,4 +22,12 @@ public class Version {
     public void setUrl(String url) throws Exception{
         this.url = Util.parseUrl(Constant.pokemonVersion, url);
     }
+
+    @Override
+    public String toString(){
+        return "Generation{" +
+                "name=" + name +
+                ", url=" + url +
+                "}";
+    }
 }

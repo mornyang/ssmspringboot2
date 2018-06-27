@@ -31,4 +31,13 @@ public class MoveVersionGroup {
     public void setVersionGroup(VersionGroup versionGroup) {
         this.versionGroup = versionGroup;
     }
+
+    @Override
+    public String toString() {
+        return "MoveVersionGroup{" +
+                "moveLearnMethod=" + moveLearnMethod +
+                ", level_learned_at=" + level_learned_at +
+                ", versionGroup=" + versionGroup +
+                '}';
+    }
 }
