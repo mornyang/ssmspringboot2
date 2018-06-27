@@ -1,4 +1,4 @@
-package com.example.ssmspringboot2.domain.pokemon;
+package com.example.ssmspringboot2.domain.type;
 
 import com.example.ssmspringboot2.domain.link.Generation;
 
