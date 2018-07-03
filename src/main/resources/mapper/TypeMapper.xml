@@ -8,6 +8,15 @@
             <id property="url" column="generationID"/>
             <result property="name" column="generationName"/>
         </association>
+        <association property="damageRelation" javaType="DamageRelation">
+            <collection property="half_damage_from" ofType="Type" select="halfDamageFrom" column="tid = typeID"/>
+            <collection property="no_damage_from" ofType="Type" select="noDamageFrom" column="tid = typeID"/>
+            <collection property="double_damage_from" ofType="Type" select="doubleDamageFrom" column="tid = typeID"/>
+            <collection property="half_damage_to" ofType="Type" select="halfDamageTo" column="tid = typeID"/>
+            <collection property="no_damage_to" ofType="Type" select="noDamageTo" column="tid = typeID"/>
+            <collection property="double_damage_to" ofType="Type" select="doubleDamageTo" column="tid = typeID"/>
+        </association>
+        <collection property="game_Indices" ofType="TypeGameIndex" select="selectGameIndex" column="tid = typeID"/>
     </resultMap>
     <select id="selectTypeByID" resultMap="typeResult">
         SELECT
@@ -20,4 +29,101 @@
           pokemon_v2_type A LEFT JOIN pokemon_v2_generation B ON A.generation_id = B.id
         WHERE A.id = #{id}
     </select>
+    <select id="halfDamageFrom" resultMap="DamageResult">
+        SELECT
+          a.id,
+          a.damage_factor,
+          a.damage_type_id,
+          a.target_type_id,
+          b.id AS typeId,
+          b.name AS typeName
+        FROM pokemon_v2_typeefficacy a
+        LEFT JOIN  pokemon_v2_type b ON a.damage_type_id = b.id
+        WHERE a.target_type_id  = ${tid} AND damage_factor = 50;
+    </select>
+    <select id="noDamageFrom" resultMap="DamageResult">
+        SELECT
+          a.id,
+          a.damage_factor,
+          a.damage_type_id,
+          a.target_type_id,
+          b.id AS typeId,
+          b.name AS typeName
+        FROM pokemon_v2_typeefficacy a
+        LEFT JOIN  pokemon_v2_type b ON a.damage_type_id = b.id
+        WHERE a.target_type_id  = ${tid} AND damage_factor = 0;
+    </select>
+    <select id="doubleDamageFrom" resultMap="DamageResult">
+        SELECT
+          a.id,
+          a.damage_factor,
+          a.damage_type_id,
+          a.target_type_id,
+          b.id AS typeId,
+          b.name AS typeName
+        FROM pokemon_v2_typeefficacy a
+        LEFT JOIN  pokemon_v2_type b ON a.damage_type_id = b.id
+        WHERE a.target_type_id  = ${tid} AND damage_factor = 200;
+    </select>
+    <select id="halfDamageTo" resultMap="DamageResult">
+        SELECT
+          a.id,
+          a.damage_factor,
+          a.damage_type_id,
+          a.target_type_id,
+          b.id AS typeId,
+          b.name AS typeName
+        FROM pokemon_v2_typeefficacy a
+        LEFT JOIN  pokemon_v2_type b ON a.target_type_id = b.id
+        WHERE a.damage_type_id  = ${tid} AND damage_factor = 50;
+    </select>
+    <select id="noDamageTo" resultMap="DamageResult">
+        SELECT
+          a.id,
+          a.damage_factor,
+          a.damage_type_id,
+          a.target_type_id,
+          b.id AS typeId,
+          b.name AS typeName
+        FROM pokemon_v2_typeefficacy a
+        LEFT JOIN  pokemon_v2_type b ON a.target_type_id = b.id
+        WHERE a.damage_type_id  = ${tid} AND damage_factor = 0;
+    </select>
+    <select id="doubleDamageTo" resultMap="DamageResult">
+        SELECT
+          a.id,
+          a.damage_factor,
+          a.damage_type_id,
+          a.target_type_id,
+          b.id AS typeId,
+          b.name AS typeName
+        FROM pokemon_v2_typeefficacy a
+        LEFT JOIN  pokemon_v2_type b ON a.target_type_id = b.id
+        WHERE a.damage_type_id  = ${tid} AND damage_factor = 200;
+    </select>
+    <resultMap id="DamageResult" type="Type">
+        <id property="url" column="typeId"/>
+        <result property="name" column="typeName"/>
+    </resultMap>
+    <select id="selectGameIndex" resultMap="GameIndexResult">
+        SELECT
+          a.id,
+          b.id as gameIndexId,
+          b.game_index as gameIndex,
+          b.type_id,
+          b.generation_id,
+          c.id as generationId,
+          c.name as generationName
+        FROM pokemon_v2_type a LEFT JOIN  pokemon_v2_typegameindex b on a.id = b.type_id
+          LEFT JOIN pokemon_v2_generation c on b.generation_id = c.id
+        WHERE a.id = ${tid};
+    </select>
+    <resultMap id="GameIndexResult" type="TypeGameIndex">
+        <id column="gameIndexId"/>
+        <result property="game_index" column="gameIndex"/>
+        <association property="generation" javaType="Generation">
+            <id property="url" column="generationId"/>
+            <result property="name" column="generationName"/>
+        </association>
+    </resultMap>
 </mapper>

@@ -2,10 +2,14 @@ package com.example.ssmspringboot2.domain.type;
 
 import com.example.ssmspringboot2.domain.link.Generation;
 
+import java.util.List;
+
 public class TypeDetail {
     private String name;
     private Integer id;
     private Generation generation;
+    private DamageRelation damageRelation;
+    private List<TypeGameIndex> game_Indices;
 
     public String getName() {
         return name;
@@ -29,6 +33,22 @@ public class TypeDetail {
 
     public void setGeneration(Generation generation) {
         this.generation = generation;
+    }
+
+    public DamageRelation getDamageRelation() {
+        return damageRelation;
+    }
+
+    public void setDamageRelation(DamageRelation damageRelation) {
+        this.damageRelation = damageRelation;
+    }
+
+    public List<TypeGameIndex> getGame_Indices() {
+        return game_Indices;
+    }
+
+    public void setGame_Indices(List<TypeGameIndex> game_Indices) {
+        this.game_Indices = game_Indices;
     }
 
     @Override
