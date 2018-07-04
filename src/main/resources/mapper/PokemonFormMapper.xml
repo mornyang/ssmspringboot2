@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.PokemonFormMapper">
+    <select id="selectPokemonFormByID" resultMap="PokemonFormResult">
+        SELECT
+          id,
+          "order" as pokemonFormOrder,
+          form_name,
+          is_default,
+          is_battle_only,
+          is_mega,
+          form_order,
+          pokemon_id,
+          name
+        FROM pokemon_v2_pokemonform
+        WHERE pokemon_id = #{id};
+    </select>
+    <resultMap id="PokemonFormResult" type="PokemonFormDetail">
+        <id property="id" column="id"/>
+        <result property="order" column="pokemonFormOrder"/>
+        <result property="form_name" column="form_name"/>
+        <result property="is_default" column="is_default"/>
+        <result property="is_battle_only" column="is_battle_only"/>
+        <result property="is_mega" column="is_mega"/>
+        <result property="form_order" column="form_order"/>
+        <result property="name" column="name"/>
+    </resultMap>
+</mapper>
