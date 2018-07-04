@@ -13,7 +13,7 @@
           pokemon_id,
           name
         FROM pokemon_v2_pokemonform
-        WHERE pokemon_id = #{id};
+        WHERE id = #{id};
     </select>
     <resultMap id="PokemonFormResult" type="PokemonFormDetail">
         <id property="id" column="id"/>
