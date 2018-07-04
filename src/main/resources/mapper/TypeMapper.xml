@@ -23,7 +23,7 @@
         <collection property="game_Indices" ofType="TypeGameIndex" select="selectGameIndex" column="tid = typeID"/>
         <collection property="moves" ofType="MoveLink" select="selectMoves" column="tid = typeID"/>
         <collection property="pokemon" ofType="TypeSlotPokemon" select="selectPokemon" column="tid = typeID"/>
-        <collection property="names" ofType="TypeName" select="selectName" column="tid = typeID"/>
+        <collection property="names" ofType="Name" select="selectName" column="tid = typeID"/>
     </resultMap>
     <select id="selectTypeByID" resultMap="typeResult">
         SELECT
@@ -179,7 +179,7 @@
         FROM pokemon_v2_typename a LEFT JOIN pokemon_v2_language b on a.language_id = b.id
         WHERE type_id = ${tid};
     </select>
-    <resultMap id="NameResult" type="TypeName">
+    <resultMap id="NameResult" type="Name">
         <id column="id"/>
         <result property="name" column="name"/>
         <association property="language" javaType="Language">

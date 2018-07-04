@@ -3,6 +3,7 @@ package com.example.ssmspringboot2.domain.type;
 import com.example.ssmspringboot2.domain.link.Generation;
 import com.example.ssmspringboot2.domain.link.MoveDamageClass;
 import com.example.ssmspringboot2.domain.link.MoveLink;
+import com.example.ssmspringboot2.domain.link.Name;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class TypeDetail {
     private MoveDamageClass moveDamageClass;
     private List<MoveLink> moves;
     private List<TypeSlotPokemon> pokemon;
-    private List<TypeName> names;
+    private List<Name> names;
 
     public String getName() {
         return name;
@@ -81,11 +82,11 @@ public class TypeDetail {
         this.pokemon = pokemon;
     }
 
-    public List<TypeName> getNames() {
+    public List<Name> getNames() {
         return names;
     }
 
-    public void setNames(List<TypeName> names) {
+    public void setNames(List<Name> names) {
         this.names = names;
     }
 

@@ -14,6 +14,9 @@ public class Constant {
     public static String moveLearnMethod = "move-learn-method";
     public static String pokemonVersion = "version";
     public static String pokemonItem = "item";
+    public static String pokemonNature = "nature";
     public static String moveDamageClass = "move-damage-class";
     public static String language = "language";
+    public static String Characteristic = "characteristic";
+
 }

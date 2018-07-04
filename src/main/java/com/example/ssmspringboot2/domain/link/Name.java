@@ -1,8 +1,7 @@
-package com.example.ssmspringboot2.domain.type;
+package com.example.ssmspringboot2.domain.link;
 
-import com.example.ssmspringboot2.domain.link.Language;
 
-public class TypeName {
+public class Name {
     private String name;
     private Language language;
 
@@ -24,7 +23,7 @@ public class TypeName {
 
     @Override
     public String toString() {
-        return "TypeName{" +
+        return "Name{" +
                 "name='" + name + '\'' +
                 ", language=" + language +
                 '}';
