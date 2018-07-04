@@ -25,7 +25,7 @@ public class MoveLearnMethod {
 
     @Override
     public String toString(){
-        return "Generation{" +
+        return "MoveLearnMethod{" +
                 "name=" + name +
                 ", url=" + url +
                 "}";

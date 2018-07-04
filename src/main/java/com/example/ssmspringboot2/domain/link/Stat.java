@@ -25,7 +25,7 @@ public class Stat {
 
     @Override
     public String toString(){
-        return "Generation{" +
+        return "Stat{" +
                 "name=" + name +
                 ", url=" + url +
                 "}";

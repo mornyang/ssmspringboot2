@@ -25,7 +25,7 @@ public class Species {
 
     @Override
     public String toString(){
-        return "Generation{" +
+        return "Species{" +
                 "name=" + name +
                 ", url=" + url +
                 "}";

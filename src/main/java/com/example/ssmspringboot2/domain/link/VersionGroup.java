@@ -25,7 +25,7 @@ public class VersionGroup {
 
     @Override
     public String toString(){
-        return "Generation{" +
+        return "VersionGroup{" +
                 "name=" + name +
                 ", url=" + url +
                 "}";

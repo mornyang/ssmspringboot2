@@ -3,7 +3,7 @@ package com.example.ssmspringboot2.domain.link;
 import com.example.ssmspringboot2.util.Constant;
 import com.example.ssmspringboot2.util.Util;
 
-public class Version {
+public class MoveDamageClass {
     private String name;
     private String url;
 
@@ -20,12 +20,12 @@ public class Version {
     }
 
     public void setUrl(String url) throws Exception{
-        this.url = Util.parseUrl(Constant.pokemonVersion, url);
+        this.url = Util.parseUrl(Constant.moveDamageClass, url);
     }
 
     @Override
     public String toString(){
-        return "Version{" +
+        return "MoveDamageClass{" +
                 "name=" + name +
                 ", url=" + url +
                 "}";

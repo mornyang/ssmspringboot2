@@ -16,17 +16,28 @@
             <collection property="no_damage_to" ofType="Type" select="noDamageTo" column="tid = typeID"/>
             <collection property="double_damage_to" ofType="Type" select="doubleDamageTo" column="tid = typeID"/>
         </association>
+        <association property="moveDamageClass" javaType="MoveDamageClass">
+            <id property="url" column="moveDamageClassId"/>
+            <result property="name" column="moveDamageClassName"/>
+        </association>
         <collection property="game_Indices" ofType="TypeGameIndex" select="selectGameIndex" column="tid = typeID"/>
+        <collection property="moves" ofType="MoveLink" select="selectMoves" column="tid = typeID"/>
+        <collection property="pokemon" ofType="TypeSlotPokemon" select="selectPokemon" column="tid = typeID"/>
+        <collection property="names" ofType="TypeName" select="selectName" column="tid = typeID"/>
     </resultMap>
     <select id="selectTypeByID" resultMap="typeResult">
         SELECT
           A.id as typeID,
           A.name as typeName,
           A.generation_id,
+          A.move_damage_class_id,
           B.id as generationID,
-          B.name as generationName
+          B.name as generationName,
+          C.id as moveDamageClassId,
+          C.name as moveDamageClassName
         FROM
           pokemon_v2_type A LEFT JOIN pokemon_v2_generation B ON A.generation_id = B.id
+          LEFT JOIN pokemon_v2_movedamageclass C on A.move_damage_class_id = C.id
         WHERE A.id = #{id}
     </select>
     <select id="halfDamageFrom" resultMap="DamageResult">
@@ -124,6 +135,56 @@
         <association property="generation" javaType="Generation">
             <id property="url" column="generationId"/>
             <result property="name" column="generationName"/>
+        </association>
+    </resultMap>
+    <select id="selectMoves" resultMap="MoveResult">
+        SELECT
+          id,
+          type_id,
+          name
+        FROM pokemon_v2_move
+        WHERE type_id = ${tid};
+    </select>
+    <resultMap id="MoveResult" type="MoveLink">
+        <id property="url" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <select id="selectPokemon" resultMap="PokemonResult">
+        SELECT
+          a.id,
+          a.slot,
+          a.pokemon_id,
+          a.type_id,
+          b.id as pokemonId,
+          b.name as pokemonName
+        FROM pokemon_v2_pokemontype a LEFT JOIN pokemon_v2_pokemon b on a.pokemon_id = b.id
+        WHERE type_id = ${tid};
+    </select>
+    <resultMap id="PokemonResult" type="TypeSlotPokemon">
+        <id column="id"/>
+        <result property="slot" column="slot"/>
+        <association property="pokemon" javaType="PokemonLink">
+            <id property="url" column="pokemonId"/>
+            <result property="name" column="pokemonName"/>
+        </association>
+    </resultMap>
+    <select id="selectName" resultMap="NameResult">
+        SELECT
+          a.id,
+          a.language_id,
+          a.type_id,
+          a.name,
+          b.id as languageId,
+          b.name as languageName
+        FROM pokemon_v2_typename a LEFT JOIN pokemon_v2_language b on a.language_id = b.id
+        WHERE type_id = ${tid};
+    </select>
+    <resultMap id="NameResult" type="TypeName">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
         </association>
     </resultMap>
 </mapper>

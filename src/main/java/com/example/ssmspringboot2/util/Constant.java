@@ -2,6 +2,7 @@ package com.example.ssmspringboot2.util;
 
 public class Constant {
     public static int port = 8080;
+    public static String pokemon = "pokemon";
     public static String pokemonType = "type";
     public static String pokemonGeneration = "generation";
     public static String pokemonStat = "stat";
@@ -13,4 +14,6 @@ public class Constant {
     public static String moveLearnMethod = "move-learn-method";
     public static String pokemonVersion = "version";
     public static String pokemonItem = "item";
+    public static String moveDamageClass = "move-damage-class";
+    public static String language = "language";
 }

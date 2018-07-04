@@ -1,6 +1,8 @@
 package com.example.ssmspringboot2.domain.type;
 
 import com.example.ssmspringboot2.domain.link.Generation;
+import com.example.ssmspringboot2.domain.link.MoveDamageClass;
+import com.example.ssmspringboot2.domain.link.MoveLink;
 
 import java.util.List;
 
@@ -10,6 +12,10 @@ public class TypeDetail {
     private Generation generation;
     private DamageRelation damageRelation;
     private List<TypeGameIndex> game_Indices;
+    private MoveDamageClass moveDamageClass;
+    private List<MoveLink> moves;
+    private List<TypeSlotPokemon> pokemon;
+    private List<TypeName> names;
 
     public String getName() {
         return name;
@@ -51,12 +57,50 @@ public class TypeDetail {
         this.game_Indices = game_Indices;
     }
 
+    public MoveDamageClass getMoveDamageClass() {
+        return moveDamageClass;
+    }
+
+    public void setMoveDamageClass(MoveDamageClass moveDamageClass) {
+        this.moveDamageClass = moveDamageClass;
+    }
+
+    public List<MoveLink> getMoves() {
+        return moves;
+    }
+
+    public void setMoves(List<MoveLink> moves) {
+        this.moves = moves;
+    }
+
+    public List<TypeSlotPokemon> getPokemon() {
+        return pokemon;
+    }
+
+    public void setPokemon(List<TypeSlotPokemon> pokemon) {
+        this.pokemon = pokemon;
+    }
+
+    public List<TypeName> getNames() {
+        return names;
+    }
+
+    public void setNames(List<TypeName> names) {
+        this.names = names;
+    }
+
     @Override
     public String toString() {
         return "TypeDetail{" +
                 "name='" + name + '\'' +
                 ", id=" + id +
                 ", generation=" + generation +
+                ", damageRelation=" + damageRelation +
+                ", game_Indices=" + game_Indices +
+                ", moveDamageClass=" + moveDamageClass +
+                ", moves=" + moves +
+                ", pokemon=" + pokemon +
+                ", names=" + names +
                 '}';
     }
 }
