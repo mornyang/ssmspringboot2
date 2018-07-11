@@ -1,7 +1,7 @@
 package com.example.ssmspringboot2.dao.impl;
 
-import com.example.ssmspringboot2.dao.PokemonFormMapper;
-import com.example.ssmspringboot2.dao.PokemonFormService;
+import com.example.ssmspringboot2.dao.Mapper.PokemonFormMapper;
+import com.example.ssmspringboot2.dao.Service.PokemonFormService;
 import com.example.ssmspringboot2.domain.PokemonForm.PokemonFormDetail;
 import org.springframework.stereotype.Service;
 

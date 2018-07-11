@@ -1,6 +1,6 @@
 package com.example.ssmspringboot2.controller;
 
-import com.example.ssmspringboot2.dao.TypeService;
+import com.example.ssmspringboot2.dao.Service.TypeService;
 import com.example.ssmspringboot2.domain.type.TypeDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

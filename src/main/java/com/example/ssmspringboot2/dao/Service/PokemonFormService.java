@@ -1,4 +1,4 @@
-package com.example.ssmspringboot2.dao;
+package com.example.ssmspringboot2.dao.Service;
 
 import com.example.ssmspringboot2.domain.PokemonForm.PokemonFormDetail;
 
