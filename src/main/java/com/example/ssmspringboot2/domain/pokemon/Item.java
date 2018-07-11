@@ -36,7 +36,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
+        return "item{" +
                 "name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", versionDetails=" + versionDetails +

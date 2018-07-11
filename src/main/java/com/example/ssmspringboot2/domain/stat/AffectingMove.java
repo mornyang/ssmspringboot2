@@ -1,6 +1,4 @@
-package com.example.ssmspringboot2.domain.Stat;
-
-import com.example.ssmspringboot2.domain.pokemon.Move;
+package com.example.ssmspringboot2.domain.stat;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package com.example.ssmspringboot2.dao.Mapper;
+package com.example.ssmspringboot2.dao.mapper;
 
-import com.example.ssmspringboot2.domain.PokemonForm.PokemonFormDetail;
+import com.example.ssmspringboot2.domain.pokemonForm.PokemonFormDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

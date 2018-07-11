@@ -1,7 +1,7 @@
 package com.example.ssmspringboot2.controller;
 
-import com.example.ssmspringboot2.dao.Service.PokemonFormService;
-import com.example.ssmspringboot2.domain.PokemonForm.PokemonFormDetail;
+import com.example.ssmspringboot2.dao.service.PokemonFormService;
+import com.example.ssmspringboot2.domain.pokemonForm.PokemonFormDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

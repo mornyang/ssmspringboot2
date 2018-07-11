@@ -25,7 +25,7 @@ public class Ability {
 
     @Override
     public String toString() {
-        return "Ability{" +
+        return "ability{" +
                 "name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 '}';

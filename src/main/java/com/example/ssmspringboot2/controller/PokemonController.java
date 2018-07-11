@@ -1,6 +1,6 @@
 package com.example.ssmspringboot2.controller;
 
-import com.example.ssmspringboot2.dao.Service.PokemonService;
+import com.example.ssmspringboot2.dao.service.PokemonService;
 import com.example.ssmspringboot2.domain.pokemon.Pokemon;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;

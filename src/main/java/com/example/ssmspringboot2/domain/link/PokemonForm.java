@@ -25,7 +25,7 @@ public class PokemonForm {
 
     @Override
     public String toString(){
-        return "PokemonForm{" +
+        return "pokemonForm{" +
                 "name=" + name +
                 ", url=" + url +
                 "}";

@@ -1,6 +1,6 @@
-package com.example.ssmspringboot2.dao.Mapper;
+package com.example.ssmspringboot2.dao.mapper;
 
-import com.example.ssmspringboot2.domain.Item.ItemDetail;
+import com.example.ssmspringboot2.domain.item.ItemDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

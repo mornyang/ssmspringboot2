@@ -1,7 +1,7 @@
 package com.example.ssmspringboot2.controller;
 
-import com.example.ssmspringboot2.dao.Service.StatService;
-import com.example.ssmspringboot2.domain.Stat.StatDetail;
+import com.example.ssmspringboot2.dao.service.StatService;
+import com.example.ssmspringboot2.domain.stat.StatDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

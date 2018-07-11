@@ -1,7 +1,7 @@
 package com.example.ssmspringboot2.controller;
 
-import com.example.ssmspringboot2.dao.Service.AbilityService;
-import com.example.ssmspringboot2.domain.Ability.AbilityDetail;
+import com.example.ssmspringboot2.dao.service.AbilityService;
+import com.example.ssmspringboot2.domain.ability.AbilityDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.example.ssmspringboot2.dao.Mapper;
+package com.example.ssmspringboot2.dao.mapper;
 
 import com.example.ssmspringboot2.domain.pokemon.Pokemon;
 import org.apache.ibatis.annotations.Mapper;

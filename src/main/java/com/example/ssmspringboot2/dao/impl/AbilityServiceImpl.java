@@ -1,8 +1,8 @@
 package com.example.ssmspringboot2.dao.impl;
 
-import com.example.ssmspringboot2.dao.Mapper.AbilityMapper;
-import com.example.ssmspringboot2.dao.Service.AbilityService;
-import com.example.ssmspringboot2.domain.Ability.AbilityDetail;
+import com.example.ssmspringboot2.dao.mapper.AbilityMapper;
+import com.example.ssmspringboot2.dao.service.AbilityService;
+import com.example.ssmspringboot2.domain.ability.AbilityDetail;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

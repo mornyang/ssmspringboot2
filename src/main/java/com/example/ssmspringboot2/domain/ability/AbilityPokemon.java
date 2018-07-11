@@ -1,4 +1,4 @@
-package com.example.ssmspringboot2.domain.Ability;
+package com.example.ssmspringboot2.domain.ability;
 
 import com.example.ssmspringboot2.domain.link.PokemonLink;
 

@@ -1,4 +1,4 @@
-package com.example.ssmspringboot2.dao.Mapper;
+package com.example.ssmspringboot2.dao.mapper;
 
 import com.example.ssmspringboot2.domain.type.TypeDetail;
 import org.apache.ibatis.annotations.Mapper;

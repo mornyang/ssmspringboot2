@@ -1,4 +1,4 @@
-package com.example.ssmspringboot2.domain.Stat;
+package com.example.ssmspringboot2.domain.stat;
 
 import com.example.ssmspringboot2.domain.link.Characteristic;
 import com.example.ssmspringboot2.domain.link.MoveDamageClass;
