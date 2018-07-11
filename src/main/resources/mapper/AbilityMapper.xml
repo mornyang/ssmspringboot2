@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.AbilityMapper">
+    <select id="selectAbilityByID" resultMap="AbilityResult">
+        SELECT
+          id,
+          is_main_series,
+          name
+        FROM pokemon_v2_ability
+        WHERE id = #{id}
+    </select>
+    <resultMap id="AbilityResult" type="AbilityDetail">
+        <id property="id" column="id"/>
+        <result property="is_main_series" column="is_main_series"/>
+        <result property="name" column="name"/>
+    </resultMap>
+</mapper>
