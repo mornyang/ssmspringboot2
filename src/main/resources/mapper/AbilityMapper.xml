@@ -3,15 +3,152 @@
 <mapper namespace="com.example.ssmspringboot2.dao.AbilityMapper">
     <select id="selectAbilityByID" resultMap="AbilityResult">
         SELECT
-          id,
-          is_main_series,
-          name
-        FROM pokemon_v2_ability
-        WHERE id = #{id}
+          A.id,
+          A.is_main_series,
+          A.name,
+          B.id as generationId,
+          B.name as generationName
+        FROM pokemon_v2_ability A
+        LEFT JOIN pokemon_v2_generation B on A.generation_id = B.id
+        WHERE A.id = #{id}
     </select>
     <resultMap id="AbilityResult" type="AbilityDetail">
         <id property="id" column="id"/>
         <result property="is_main_series" column="is_main_series"/>
         <result property="name" column="name"/>
+        <association property="generation" javaType="Generation">
+            <id property="url" column="generationId"/>
+            <result property="name" column="generationName"/>
+        </association>
+        <collection property="pokemon" ofType="AbilityPokemon" select="selectPokemon" column="aid = id"/>
+        <collection property="effect_changes" ofType="AbilityEffectChange" select="selectEffectChange" column="aid = id"/>
+        <collection property="effect_entries" ofType="ShortEffectEntry" select="selectEffect" column="aid = id"/>
+        <collection property="names" ofType="Name" select="selectName" column="aid = id"/>
+        <collection property="flavor_text_entries" ofType="FlavorTextEntry" select="selectFlavorTextEntry" column="aid = id"/>
+    </resultMap>
+    <select id="selectPokemon" resultMap="PokemonResult">
+        SELECT
+          A.id,
+          A.is_hidden,
+          A.slot,
+          A.ability_id,
+          A.pokemon_id,
+          B.id as pokemonId,
+          B.name as pokemonName
+        FROM pokemon_v2_pokemonability A
+        LEFT JOIN pokemon_v2_pokemon B ON A.pokemon_id = B.id
+        WHERE A.ability_id = ${aid}
+    </select>
+    <resultMap id="PokemonResult" type="AbilityPokemon">
+        <id column="id"/>
+        <result property="slot" column="slot"/>
+        <result property="is_hidden" column="is_hidden"/>
+        <association property="pokemon" javaType="PokemonLink">
+            <id property="url" column="pokemonId"/>
+            <result property="name" column="pokemonName"/>
+        </association>
+    </resultMap>
+    <select id="selectEffectChange" resultMap="EffectChangeResult">
+        SELECT
+          A.id as abilityChangeId,
+          A.ability_id,
+          A.version_group_id,
+          B.id as abilityChangeEffectTextId,
+          B.effect as changeEffect,
+          B.language_id as changeEffectLanguage,
+          C.id as versionGroupId,
+          C.name as versionGroupName,
+          D.id as languageId,
+          D.name as languageName
+        FROM pokemon_v2_abilitychange A
+        LEFT JOIN pokemon_v2_abilitychangeeffecttext B on A.id = B.ability_change_id
+        LEFT JOIN pokemon_v2_versiongroup C on A.version_group_id = C.id
+        LEFT JOIN pokemon_v2_language D on B.language_id = D.id
+        WHERE A.ability_id = ${aid}
+    </select>
+    <resultMap id="EffectChangeResult" type="AbilityEffectChange">
+        <id column="abilityChangeId"/>
+        <association property="version_group" javaType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </association>
+        <collection property="effect_entries" resultMap="EffectEntryResult"/>
+    </resultMap>
+    <resultMap id="EffectEntryResult" type="EffectEntry">
+        <id column="abilityChangeEffectTextId"/>
+        <result property="effect" column="changeEffect"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectEffect" resultMap="EffectResult">
+        SELECT
+          A.id,
+          A.ability_id,
+          A.language_id,
+          A.effect,
+          A.short_effect,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_abilityeffecttext A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.ability_id = ${aid}
+    </select>
+    <resultMap id="EffectResult" type="ShortEffectEntry">
+        <id column="id"/>
+        <result property="short_effect" column="short_effect"/>
+        <result property="effect" column="effect"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectName" resultMap="NameResult">
+        SELECT
+          A.id,
+          A.ability_id,
+          A.language_id,
+          A.name,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_abilityname A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.ability_id = ${aid}
+    </select>
+    <resultMap id="NameResult" type="Name">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectFlavorTextEntry" resultMap="FlavorTextResult">
+        SELECT
+          A.id,
+          A.flavor_text,
+          A.language_id,
+          A.version_group_id,
+          B.id as languageId,
+          B.name as languageName,
+          C.id as versionGroupId,
+          C.name as versionGroupName
+        FROM pokemon_v2_abilityflavortext A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        LEFT JOIN pokemon_v2_versiongroup C on A.version_group_id = C.id
+        WHERE A.ability_id = ${aid}
+    </select>
+    <resultMap id="FlavorTextResult" type="FlavorTextEntry">
+        <id column="id"/>
+        <result property="flavor_text" column="flavor_text"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+        <association property="version_group" javaType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </association>
     </resultMap>
 </mapper>
