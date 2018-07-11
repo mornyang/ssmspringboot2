@@ -1,5 +1,6 @@
 package com.example.ssmspringboot2.domain.pokemon;
 
+import com.example.ssmspringboot2.domain.common.Sprites;
 import com.example.ssmspringboot2.domain.link.PokemonForm;
 import com.example.ssmspringboot2.domain.link.Species;
 

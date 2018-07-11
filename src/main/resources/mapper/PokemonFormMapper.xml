@@ -3,17 +3,25 @@
 <mapper namespace="com.example.ssmspringboot2.dao.PokemonFormMapper">
     <select id="selectPokemonFormByID" resultMap="PokemonFormResult">
         SELECT
-          id,
-          "order" as pokemonFormOrder,
-          form_name,
-          is_default,
-          is_battle_only,
-          is_mega,
-          form_order,
-          pokemon_id,
-          name
-        FROM pokemon_v2_pokemonform
-        WHERE id = #{id};
+          A.id,
+          A."order" as pokemonFormOrder,
+          A.form_name,
+          A.is_default,
+          A.is_battle_only,
+          A.is_mega,
+          A.form_order,
+          A.pokemon_id,
+          A.name,
+          B.sprites,
+          C.id as versionGroupId,
+          C.name as versionGroupName,
+          D.id as pokemonId,
+          D.name as pokemonName
+        FROM pokemon_v2_pokemonform A
+        LEFT JOIN pokemon_v2_pokemonformsprites B ON A.id = B.pokemon_form_id
+        LEFT JOIN pokemon_v2_versiongroup C on A.version_group_id = C.id
+        LEFT JOIN pokemon_v2_pokemon D on A.pokemon_id = D.id
+        WHERE A.id = #{id};
     </select>
     <resultMap id="PokemonFormResult" type="PokemonFormDetail">
         <id property="id" column="id"/>
@@ -24,5 +32,56 @@
         <result property="is_mega" column="is_mega"/>
         <result property="form_order" column="form_order"/>
         <result property="name" column="name"/>
+        <result property="sprites" column="sprites" javaType="Sprites" typeHandler="com.example.ssmspringboot2.util.JsonTypeHandler"/>
+        <association property="versionGroup" javaType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </association>
+        <association property="pokemon" javaType="PokemonLink">
+            <id property="url" column="pokemonId"/>
+            <result property="name" column="pokemonName"/>
+        </association>
+        <collection property="form_names" ofType="Name" select="selectFormName" column="pfid = id"/>
+        <collection property="names" ofType="Name" select="selectName" column="pfid = id"/>
+    </resultMap>
+    <select id="selectFormName" resultMap="FormNameResult">
+        SELECT
+          a.id,
+          a.language_id,
+          a.pokemon_form_id,
+          a.name,
+          b.id as languageId,
+          b.name as languageName
+        FROM pokemon_v2_pokemonformname a
+        LEFT JOIN pokemon_v2_language b ON a.language_id = b.id
+        WHERE a.pokemon_form_id = ${pfid}
+    </select>
+    <resultMap id="FormNameResult" type="Name">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectName" resultMap="NameResult">
+        SELECT
+          a.id,
+          a.language_id,
+          a.pokemon_form_id,
+          a.pokemon_name,
+          b.id as languageId,
+          b.name as languageName
+        FROM pokemon_v2_pokemonformname a
+        LEFT JOIN pokemon_v2_language b ON a.language_id = b.id
+        WHERE a.pokemon_form_id = ${pfid} AND a.pokemon_name <![CDATA[ <> ]]> ""
+    </select>
+    <resultMap id="NameResult" type="Name">
+        <id column="id"/>
+        <result property="name" column="pokemon_name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
     </resultMap>
 </mapper>

@@ -1,6 +1,4 @@
-package com.example.ssmspringboot2.domain.pokemon;
-
-import com.alibaba.fastjson.JSONObject;
+package com.example.ssmspringboot2.domain.common;
 
 public class Sprites {
 

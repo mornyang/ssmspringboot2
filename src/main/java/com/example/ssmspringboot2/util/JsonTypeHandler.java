@@ -44,7 +44,7 @@ public class JsonTypeHandler implements TypeHandler<Object> {
         }
         Class<?> cls = null;
         try {
-            cls = Class.forName("com.example.ssmspringboot2.domain.pokemon.Sprites");
+            cls = Class.forName("com.example.ssmspringboot2.domain.common.Sprites");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("序列化成json时找不到指定的类", e);
         }
