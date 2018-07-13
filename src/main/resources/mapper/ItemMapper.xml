@@ -2,5 +2,203 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.ssmspringboot2.dao.mapper.ItemMapper">
     <select id="selectItemByID" resultMap="ItemResult">
+        SELECT
+          A.id,
+          A.name,
+          A.fling_power,
+          A.cost,
+          B.id as itemCategoryId,
+          B.name as itemCategoryName,
+          C.id as flingEffectId,
+          C.name as flingEffectName,
+          D.sprites,
+          E.id as evolutionChainId
+        FROM pokemon_v2_item A
+        LEFT JOIN pokemon_v2_itemcategory B on A.item_category_id = B.id
+        LEFT JOIN pokemon_v2_itemflingeffect C on A.item_fling_effect_id = C.id
+        LEFT JOIN pokemon_v2_itemsprites D on A.id = D.item_id
+        LEFT JOIN pokemon_v2_evolutionchain E on A.id = E.baby_trigger_item_id
+        WHERE A.id = #{id}
     </select>
+    <resultMap id="ItemResult" type="ItemDetail">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="fling_power" column="fling_power"/>
+        <result property="cost" column="cost"/>
+        <result property="itemSprites" column="sprites" javaType="ItemSprites" typeHandler="com.example.ssmspringboot2.util.ItemSpritesJsonTypeHandler"/>
+        <association property="itemCategory" javaType="ItemCategory">
+            <id property="url" column="itemCategoryId"/>
+            <result property="name" column="itemCategoryName"/>
+        </association>
+        <association property="itemFlingEffect" javaType="ItemFlingEffect">
+            <id property="url" column="flingEffectId"/>
+            <result property="name" column="flingEffectName"/>
+        </association>
+        <association property="baby_trigger_for" javaType="BabyTriggerFor">
+            <id property="url" column="evolutionChainId"/>
+        </association>
+        <collection property="effect_entries" ofType="ShortEffectEntry" select="selectEffectEntry" column="tid = id"/>
+        <collection property="held_by_pokemon" ofType="HeldByPokemon" select="selectHeldPokemon" column="tid = id"/>
+        <collection property="game_indices" ofType="ItemGameIndex" select="selectGameIndex" column="tid = id"/>
+        <collection property="names" ofType="Name" select="selectName" column="tid = id"/>
+        <collection property="attributes" ofType="ItemAttributes" select="selectAttributes" column="tid = id"/>
+        <collection property="flavor_text_entries" ofType="FlavorTextEntry" select="selectFlavorEntry" column="tid = id"/>
+        <collection property="machines" ofType="ItemMachine" select="selectMachine" column="tid = id"/>
+    </resultMap>
+    <select id="selectEffectEntry" resultMap="EffectEntryResult">
+        SELECT
+          A.id,
+          A.effect,
+          A.short_effect,
+          A.language_id,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_itemeffecttext A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.id = ${tid}
+    </select>
+    <resultMap id="EffectEntryResult" type="ShortEffectEntry">
+        <id column="id"/>
+        <result property="short_effect" column="short_effect"/>
+        <result property="effect" column="effect"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectHeldPokemon" resultMap="HeldPokemonResult">
+        SELECT
+          A.id,
+          A.rarity,
+          A.version_id,
+          A.item_id,
+          A.pokemon_id,
+          B.id as versionId,
+          B.name as versionName,
+          C.id as pokemonId,
+          C.name as pokemonName
+        FROM pokemon_v2_pokemonitem A
+        LEFT JOIN pokemon_v2_version B on A.version_id = B.id
+        LEFT JOIN pokemon_v2_pokemon C on A.pokemon_id = C.id
+        WHERE A.item_id = ${tid}
+    </select>
+    <resultMap id="HeldPokemonResult" type="HeldByPokemon">
+        <id column="pokemon_id"/>
+        <association property="pokemon" javaType="PokemonLink">
+            <id property="url" column="pokemonId"/>
+            <result property="name" column="pokemonName"/>
+        </association>
+        <collection property="version_details" ofType="VersionDetail">
+            <id column="versionId"/>
+            <result property="rarity" column="rarity"/>
+            <association property="version" javaType="Version">
+                <id property="url" column="versionId"/>
+                <result property="name" column="versionName"/>
+            </association>
+        </collection>
+    </resultMap>
+    <select id="selectGameIndex" resultMap="GameIndexResult">
+        SELECT
+          A.id,
+          A.game_index,
+          A.generation_id,
+          A.item_id,
+          B.id as generationId,
+          B.name as generationName
+        FROM pokemon_v2_itemgameindex A
+        LEFT JOIN pokemon_v2_generation B on A.generation_id = B.id
+        WHERE A.item_id = ${tid}
+    </select>
+    <resultMap id="GameIndexResult" type="ItemGameIndex">
+        <id column="id"/>
+        <result property="game_index" column="game_index"/>
+        <association property="generation" javaType="Generation">
+            <id property="url" column="generationId"/>
+            <result property="name" column="generationName"/>
+        </association>
+    </resultMap>
+    <select id="selectName" resultMap="NameResult">
+        SELECT
+          A.id,
+          A.item_id,
+          A.language_id,
+          A.name,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_itemname A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.item_id = ${tid}
+    </select>
+    <resultMap id="NameResult" type="Name">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectAttributes" resultMap="AttributesResult">
+        SELECT
+          A.id,
+          A.item_id,
+          A.item_attribute_id,
+          B.id as attributeId,
+          B.name as attributeName
+        FROM pokemon_v2_itemattributemap A
+        LEFT JOIN pokemon_v2_itemattribute B on A.item_attribute_id = B.id
+        WHERE A.item_id = ${tid}
+    </select>
+    <resultMap id="AttributesResult" type="ItemAttributes">
+        <id property="url" column="attributeId"/>
+        <result property="name" column="attributeName"/>
+    </resultMap>
+    <select id="selectFlavorEntry" resultMap="FlavorEntryResult">
+        SELECT
+          A.id,
+          A.flavor_text,
+          A.item_id,
+          A.language_id,
+          A.version_group_id,
+          B.id as languageId,
+          B.name as languageName,
+          C.id as versionGroupId,
+          C.name as versionGroupName
+        FROM pokemon_v2_itemflavortext A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        LEFT JOIN pokemon_v2_versiongroup C on A.version_group_id = C.id
+        WHERE A.item_id = ${tid}
+    </select>
+    <resultMap id="FlavorEntryResult" type="FlavorTextEntry">
+        <id column="id"/>
+        <result property="flavor_text" column="flavor_text"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+        <association property="version_group" javaType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </association>
+    </resultMap>
+    <select id="selectMachine" resultMap="MachineResult">
+        SELECT
+          A.id,
+          A.version_group_id,
+          A.item_id,
+          B.id as versionGroupId,
+          B.name as versionGroupName
+        FROM pokemon_v2_machine A
+        LEFT JOIN pokemon_v2_versiongroup B on A.version_group_id = B.id
+        WHERE A.item_id = ${tid}
+    </select>
+    <resultMap id="MachineResult" type="ItemMechine">
+        <id column="id"/>
+        <association property="machine" javaType="Machine">
+            <id property="url" column="id"/>
+        </association>
+        <association property="version_group" javaType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </association>
+    </resultMap>
 </mapper>

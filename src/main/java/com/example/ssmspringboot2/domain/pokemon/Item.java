@@ -1,5 +1,6 @@
 package com.example.ssmspringboot2.domain.pokemon;
 
+import com.example.ssmspringboot2.domain.common.VersionDetail;
 import com.example.ssmspringboot2.util.Constant;
 import com.example.ssmspringboot2.util.Util;
 

@@ -32,7 +32,7 @@
         <result property="is_mega" column="is_mega"/>
         <result property="form_order" column="form_order"/>
         <result property="name" column="name"/>
-        <result property="sprites" column="sprites" javaType="Sprites" typeHandler="com.example.ssmspringboot2.util.JsonTypeHandler"/>
+        <result property="sprites" column="sprites" javaType="Sprites" typeHandler="com.example.ssmspringboot2.util.SpritesJsonTypeHandler"/>
         <association property="versionGroup" javaType="VersionGroup">
             <id property="url" column="versionGroupId"/>
             <result property="name" column="versionGroupName"/>

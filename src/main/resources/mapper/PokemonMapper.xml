@@ -47,7 +47,7 @@
         <result property="base_experience" column="base_experience"/>
         <result property="is_default" column="is_default"/>
         <result property="name" column="name"/>
-        <result property="sprites" column="sprites" javaType="Sprites" typeHandler="com.example.ssmspringboot2.util.JsonTypeHandler"/>
+        <result property="sprites" column="sprites" javaType="Sprites" typeHandler="com.example.ssmspringboot2.util.SpritesJsonTypeHandler"/>
         <association property="species" javaType="Species">
             <id property="url" column="speciesId"/>
             <result property="name" column="speciesName"/>

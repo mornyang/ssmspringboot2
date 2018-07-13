@@ -2,7 +2,7 @@ package com.example.ssmspringboot2.domain.stat;
 
 import com.example.ssmspringboot2.domain.link.Characteristic;
 import com.example.ssmspringboot2.domain.link.MoveDamageClass;
-import com.example.ssmspringboot2.domain.link.Name;
+import com.example.ssmspringboot2.domain.common.Name;
 
 import java.util.List;
 

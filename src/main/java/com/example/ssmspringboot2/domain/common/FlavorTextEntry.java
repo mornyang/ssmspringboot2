@@ -1,4 +1,4 @@
-package com.example.ssmspringboot2.domain.ability;
+package com.example.ssmspringboot2.domain.common;
 
 import com.example.ssmspringboot2.domain.link.Language;
 import com.example.ssmspringboot2.domain.link.VersionGroup;

@@ -1,5 +1,7 @@
-package com.example.ssmspringboot2.domain.link;
+package com.example.ssmspringboot2.domain.common;
 
+
+import com.example.ssmspringboot2.domain.link.Language;
 
 public class Name {
     private String name;

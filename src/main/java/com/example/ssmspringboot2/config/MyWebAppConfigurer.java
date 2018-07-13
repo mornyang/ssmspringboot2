@@ -16,6 +16,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/api/media/sprites/pokemon/female/**").addResourceLocations("classpath:/static/media/sprites/pokemon/female/");
         registry.addResourceHandler("/api/media/sprites/pokemon/shiny/**").addResourceLocations("classpath:/static/media/sprites/pokemon/shiny/");
         registry.addResourceHandler("/api/media/sprites/pokemon/shiny/female/**").addResourceLocations("classpath:/static/media/sprites/pokemon/shiny/female/");
+        registry.addResourceHandler("/api/media/sprites/items/**").addResourceLocations("classpath:/static/media/sprites/items/");
         super.addResourceHandlers(registry);
     }
 }

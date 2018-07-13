@@ -3,7 +3,7 @@ package com.example.ssmspringboot2.domain.link;
 import com.example.ssmspringboot2.util.Constant;
 import com.example.ssmspringboot2.util.Util;
 
-public class Characteristic {
+public class Machine {
     private String url;
 
     public String getUrl() {
@@ -11,12 +11,12 @@ public class Characteristic {
     }
 
     public void setUrl(String url) throws Exception{
-        this.url = Util.parseUrl(Constant.characteristic, url);
+        this.url = Util.parseUrl(Constant.machine, url);
     }
 
     @Override
     public String toString() {
-        return "Characteristic{" +
+        return "Machine{" +
                 "url='" + url + '\'' +
                 '}';
     }

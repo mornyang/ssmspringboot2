@@ -3,7 +3,7 @@ package com.example.ssmspringboot2.domain.type;
 import com.example.ssmspringboot2.domain.link.Generation;
 import com.example.ssmspringboot2.domain.link.MoveDamageClass;
 import com.example.ssmspringboot2.domain.link.MoveLink;
-import com.example.ssmspringboot2.domain.link.Name;
+import com.example.ssmspringboot2.domain.common.Name;
 
 import java.util.List;
 

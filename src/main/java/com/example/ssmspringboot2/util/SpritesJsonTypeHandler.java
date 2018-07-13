@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JsonTypeHandler implements TypeHandler<Object> {
+public class SpritesJsonTypeHandler implements TypeHandler<Object> {
     @Override
     public Object getResult(ResultSet rs, String columnName) throws SQLException{
         String json = rs.getString(columnName);

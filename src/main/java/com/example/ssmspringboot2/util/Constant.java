@@ -17,6 +17,10 @@ public class Constant {
     public static String pokemonNature = "nature";
     public static String moveDamageClass = "move-damage-class";
     public static String language = "language";
-    public static String Characteristic = "characteristic";
-
+    public static String characteristic = "characteristic";
+    public static String itemCategory = "item-category";
+    public static String itemFlingEffect = "item-fling-effect";
+    public static String itemAttributes = "item_attribute";
+    public static String machine = "machine";
+    public static String evolutionChain = "evolution-chain";
 }
