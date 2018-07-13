@@ -24,7 +24,7 @@ public class VersionDetail {
 
     @Override
     public String toString() {
-        return "VersionDetail{" +
+        return "VersionInfo{" +
                 "rarity=" + rarity +
                 ", version=" + version +
                 '}';

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.mapper.VersionMapper">
+    <select id="selectVersionByID" resultMap="VersionResult">
+        SELECT
+          A.id,
+          A.version_group_id,
+          A.name,
+          B.id as versionGroupId,
+          B.name as versionGroupName
+        FROM pokemon_v2_version A
+        LEFT JOIN pokemon_v2_versiongroup B on A.version_group_id = B.id
+        WHERE A.id=7;
+    </select>
+    <resultMap id="VersionResult" type="VersionInfo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <association property="version_group" javaType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </association>
+        <collection property="names" ofType="Name" select="selectName" column="vid = id"/>
+    </resultMap>
+    <select id="selectName" resultMap="NameResult">
+        SELECT
+          A.id,
+          A.language_id,
+          A.version_id,
+          A.name,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_versionname A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.version_id = ${vid};
+    </select>
+    <resultMap id="NameResult" type="Name">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+</mapper>
