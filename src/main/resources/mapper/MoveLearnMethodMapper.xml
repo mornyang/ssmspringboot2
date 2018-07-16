@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.mapper.MoveLearnMethodMapper">
+    <select id="selectMoveLearnMethodByID" resultMap="MoveLearnMethodResult">
+        SELECT
+          A.id,
+          A.name,
+          C.id as versionGroupId,
+          C.name as versionGroupName
+        FROM pokemon_v2_movelearnmethod A
+          LEFT JOIN pokemon_v2_versiongroupmovelearnmethod B on A.id = B.move_learn_method_id
+          LEFT JOIN pokemon_v2_versiongroup C on B.version_group_id = C.id
+        WHERE A.id = #{id}
+    </select>
+    <resultMap id="MoveLearnMethodResult" type="MoveLearnMethodDetail">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <collection property="version_group" ofType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </collection>
+        <collection property="descriptions" ofType="Description" select="selectDesc" column="mid = id"/>
+        <collection property="names" ofType="Name" select="selectName" column="mid = id"/>
+    </resultMap>
+    <select id="selectDesc" resultMap="DescResult">
+        SELECT
+          A.id,
+          A.description,
+          A.language_id,
+          A.move_learn_method_id,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_movelearnmethoddescription A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.move_learn_method_id = ${mid}
+    </select>
+    <resultMap id="DescResult" type="Description">
+        <id column="id"/>
+        <result property="description" column="description"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectName" resultMap="NameResult">
+        SELECT
+          A.id,
+          A.name,
+          A.language_id,
+          A.move_learn_method_id,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_movelearnmethodname A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.move_learn_method_id = ${mid}
+    </select>
+    <resultMap id="NameResult" type="Name">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+</mapper>

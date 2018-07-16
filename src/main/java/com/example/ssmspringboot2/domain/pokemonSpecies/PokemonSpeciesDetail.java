@@ -1,5 +1,6 @@
 package com.example.ssmspringboot2.domain.pokemonSpecies;
 
+import com.example.ssmspringboot2.domain.common.Description;
 import com.example.ssmspringboot2.domain.common.FlavorTextEntryVersion;
 import com.example.ssmspringboot2.domain.common.Genera;
 import com.example.ssmspringboot2.domain.common.Name;
