@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.mapper.MoveMapper">
+    <select id="selectMoveByID" resultMap="MoveResult">
+        SELECT
+          A.id,
+          A.power,
+          A.pp,
+          A.accuracy,
+          A.priority,
+          A.move_effect_chance,
+          A.name,
+          B.id as generationId,
+          B.name as generationName
+        FROM pokemon_v2_move A
+          LEFT JOIN pokemon_v2_generation B on A.generation_id = B.id
+        WHERE A.id = #{id}
+    </select>
+    <resultMap id="MoveResult" type="MoveDetail">
+        <id property="id" column="id"/>
+        <result property="pp" column="pp"/>
+        <result property="power" column="power"/>
+        <result property="accuracy" column="accuracy"/>
+        <result property="priority" column="priority"/>
+        <result property="name" column="name"/>
+        <result property="effect_chance" column="move_effect_chance"/>
+        <association property="generation" javaType="Generation">
+            <id property="url" column="generationId"/>
+            <result property="name" column="generationName"/>
+        </association>
+    </resultMap>
+</mapper>
