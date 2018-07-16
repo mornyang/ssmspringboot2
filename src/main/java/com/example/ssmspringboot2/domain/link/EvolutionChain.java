@@ -3,7 +3,7 @@ package com.example.ssmspringboot2.domain.link;
 import com.example.ssmspringboot2.util.Constant;
 import com.example.ssmspringboot2.util.Util;
 
-public class BabyTriggerFor {
+public class EvolutionChain {
     private String url;
 
     public String getUrl() {
@@ -16,7 +16,7 @@ public class BabyTriggerFor {
 
     @Override
     public String toString() {
-        return "BabyTriggerFor{" +
+        return "EvolutionChain{" +
                 "url='" + url + '\'' +
                 '}';
     }

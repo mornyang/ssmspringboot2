@@ -34,7 +34,7 @@
             <id property="url" column="flingEffectId"/>
             <result property="name" column="flingEffectName"/>
         </association>
-        <association property="baby_trigger_for" javaType="BabyTriggerFor">
+        <association property="baby_trigger_for" javaType="EvolutionChain">
             <id property="url" column="evolutionChainId"/>
         </association>
         <collection property="effect_entries" ofType="ShortEffectEntry" select="selectEffectEntry" column="tid = id"/>

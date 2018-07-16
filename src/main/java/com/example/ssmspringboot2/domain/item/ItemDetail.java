@@ -3,7 +3,7 @@ package com.example.ssmspringboot2.domain.item;
 import com.example.ssmspringboot2.domain.common.FlavorTextEntry;
 import com.example.ssmspringboot2.domain.common.Name;
 import com.example.ssmspringboot2.domain.common.ShortEffectEntry;
-import com.example.ssmspringboot2.domain.link.BabyTriggerFor;
+import com.example.ssmspringboot2.domain.link.EvolutionChain;
 import com.example.ssmspringboot2.domain.link.ItemAttributes;
 import com.example.ssmspringboot2.domain.link.ItemCategory;
 import com.example.ssmspringboot2.domain.link.ItemFlingEffect;
@@ -18,7 +18,7 @@ public class ItemDetail {
     private ItemCategory itemCategory;
     private ItemFlingEffect itemFlingEffect;
     private ItemSprites itemSprites;
-    private BabyTriggerFor baby_trigger_for;
+    private EvolutionChain baby_trigger_for;
     private List<ShortEffectEntry> effect_entries;
     private List<HeldByPokemon> held_by_pokemon;
     private List<ItemGameIndex> game_indices;
@@ -83,11 +83,11 @@ public class ItemDetail {
         this.itemSprites = itemSprites;
     }
 
-    public BabyTriggerFor getBaby_trigger_for() {
+    public EvolutionChain getBaby_trigger_for() {
         return baby_trigger_for;
     }
 
-    public void setBaby_trigger_for(BabyTriggerFor baby_trigger_for) {
+    public void setBaby_trigger_for(EvolutionChain baby_trigger_for) {
         this.baby_trigger_for = baby_trigger_for;
     }
 

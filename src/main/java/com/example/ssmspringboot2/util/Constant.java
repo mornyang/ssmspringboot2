@@ -23,4 +23,11 @@ public class Constant {
     public static String itemAttributes = "item_attribute";
     public static String machine = "machine";
     public static String evolutionChain = "evolution-chain";
+    public static String pokemonColor = "pokemon-color";
+    public static String pokemonHabitat = "pokemon-habitat";
+    public static String pokemonShape = "pokemon-shape";
+    public static String growthRate = "growth-rate";
+    public static String eggGroup = "egg-group";
+    public static String palParkArea = "pal_park_area";
+    public static String pokedex = "pokedex";
 }

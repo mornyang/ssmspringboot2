@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.mapper.PokemonSpeciesMapper">
+    <select id="selectPokemonSpeciesByID" resultMap="SpeciesResult">
+        SELECT
+          A.id,
+          A."order" as speciesOrder,
+          A.gender_rate,
+          A.capture_rate,
+          A.base_happiness,
+          A.is_baby,
+          A.hatch_counter,
+          A.has_gender_differences,
+          A.forms_switchable,
+          A.name,
+          A.pokemon_color_id,
+          A.generation_id,
+          A.evolution_chain_id,
+          A.pokemon_habitat_id,
+          A.pokemon_shape_id,
+          A.growth_rate_id,
+          A.evolves_from_species_id,
+          B.id as colorId,
+          B.name as colorName,
+          C.id as habitatId,
+          C.name as habitatName,
+          D.id as shapeId,
+          D.name as shapeName,
+          E.id as generationId,
+          E.name as generationName,
+          F.id as growthRateId,
+          F.name as growthRateName,
+          G.id as evolvesFromId,
+          G.name as evolvesFromName,
+          H.id as evolutionChainId,
+          I.id as pokemonId,
+          I.is_default,
+          I.name as pokemonName
+        FROM pokemon_v2_pokemonspecies A
+        LEFT JOIN pokemon_v2_pokemoncolor B on A.pokemon_color_id = B.id
+        LEFT JOIN  pokemon_v2_pokemonhabitat C on A.pokemon_habitat_id = C.id
+        LEFT JOIN pokemon_v2_pokemonshape D on A.pokemon_shape_id = D.id
+        LEFT JOIN pokemon_v2_generation E on A.generation_id = E.id
+        LEFT JOIN pokemon_v2_growthrate F on A.growth_rate_id = F.id
+        LEFT JOIN pokemon_v2_pokemonspecies G on A.evolves_from_species_id = G.id
+        LEFT JOIN pokemon_v2_evolutionchain H on A.evolution_chain_id = H.id
+        LEFT JOIN pokemon_v2_pokemon I on A.id = I.pokemon_species_id
+        WHERE A.id = #{id}
+    </select>
+    <resultMap id="SpeciesResult" type="PokemonSpeciesDetail">
+        <id property="id" column="id"/>
+        <result property="order" column="speciesOrder"/>
+        <result property="name" column="name"/>
+        <result property="capture_rate" column="capture_rate"/>
+        <result property="gender_rate" column="gender_rate"/>
+        <result property="base_happiness" column="base_happiness"/>
+        <result property="hatch_counter" column="hatch_counter"/>
+        <result property="forms_switchable" column="forms_switchable"/>
+        <result property="has_gender_differences" column="has_gender_differences"/>
+        <result property="is_baby" column="is_baby"/>
+        <association property="color" javaType="PokemonColor">
+            <id property="url" column="colorId"/>
+            <result property="name" column="colorName"/>
+        </association>
+        <association property="habitat" javaType="PokemonHabitat">
+            <id property="url" column="habitatId"/>
+            <result property="name" column="habitatName"/>
+        </association>
+        <association property="shape" javaType="PokemonShape">
+            <id property="url" column="shapeId"/>
+            <result property="name" column="shapeName"/>
+        </association>
+        <association property="generation" javaType="Generation">
+            <id property="url" column="generationId"/>
+            <result property="name" column="generationName"/>
+        </association>
+        <association property="growth_rate" javaType="growthRate">
+            <id property="url" column="growthRateId"/>
+            <result property="name" column="growthRateName"/>
+        </association>
+        <association property="evolves_from_species" javaType="Species">
+            <id property="url" column="evolvesFromId"/>
+            <result property="name" column="evolvesFromName"/>
+        </association>
+        <association property="evolution_chain" javaType="EvolutionChain">
+            <id property="url" column="evolutionChainId"/>
+        </association>
+        <collection property="names" ofType="Name" select="selectName" column="pid = id"/>
+        <collection property="egg_groups" ofType="EggGroup" select="selectEggGroup" column="pid = id"/>
+        <collection property="flavor_text_entries" ofType="FlavorTextEntryVersion" select="selectFlavorText" column="pid = id"/>
+        <collection property="genera" ofType="Genera" select="selectGenera" column="pid = id"/>
+        <collection property="pal_park_encounters" ofType="PalParkEncounter" select="selectArea" column="pid = id"/>
+        <collection property="pokedex_numbers" ofType="PokedexNumber" select="selectPokedex" column="pid = id"/>
+        <collection property="form_descriptions" ofType="Description" select="selectDesc" column="pid = id"/>
+        <collection property="varieties" ofType="Variety">
+            <id column="pokemonId"/>
+            <result property="is_default" column="is_default"/>
+            <association property="pokemonLink" javaType="PokemonLink">
+                <id property="url" column="pokemonId"/>
+                <result property="name" column="pokemonName"/>
+            </association>
+        </collection>
+    </resultMap>
+    <select id="selectName" resultMap="NameResult">
+        SELECT
+          A.id,
+          A.name,
+          A.language_id,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_pokemonspeciesname A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.pokemon_species_id = ${pid}
+    </select>
+    <resultMap id="NameResult" type="Name">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectEggGroup" resultMap="EggGroupResult">
+        SELECT
+          A.id,
+          A.pokemon_species_id,
+          A.egg_group_id,
+          B.id as eggGroupId,
+          B.name as eggGroupName
+        FROM pokemon_v2_pokemonegggroup A
+        LEFT JOIN pokemon_v2_egggroup B on A.egg_group_id = B.id
+        WHERE A.pokemon_species_id = ${pid}
+    </select>
+    <resultMap id="EggGroupResult" type="EggGroup">
+        <id property="url" column="eggGroupId"/>
+        <result property="name" column="eggGroupName"/>
+    </resultMap>
+    <select id="selectFlavorText" resultMap="FlavorTextResult">
+        SELECT
+          A.id,
+          A.flavor_text,
+          A.language_id,
+          A.pokemon_species_id,
+          A.version_id,
+          B.id as languageId,
+          B.name as languageName,
+          C.id as versionId,
+          C.name as versionName
+        FROM pokemon_v2_pokemonspeciesflavortext A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        LEFT JOIN pokemon_v2_version C on A.version_id = C.id
+        WHERE A.pokemon_species_id = ${pid}
+    </select>
+    <resultMap id="FlavorTextResult" type="FlavorTextEntryVersion">
+        <id column="id"/>
+        <result property="flavor_text" column="flavor_text"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+        <association property="version" javaType="Version">
+            <id property="url" column="versionId"/>
+            <result property="name" column="versionName"/>
+        </association>
+    </resultMap>
+    <select id="selectGenera" resultMap="GeneraResult">
+        SELECT
+          A.id,
+          A.genus,
+          A.language_id,
+          A.pokemon_species_id,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_pokemonspeciesname A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.pokemon_species_id = ${pid}
+    </select>
+    <resultMap id="GeneraResult" type="Genera">
+        <id column="id"/>
+        <result property="genus" column="genus"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectArea" resultMap="AreaResult">
+        SELECT
+          A.id,
+          A.rate,
+          A.base_score,
+          A.pokemon_species_id,
+          A.pal_park_area_id,
+          B.id as areaId,
+          B.name as areaName
+        FROM pokemon_v2_palpark A
+        LEFT JOIN pokemon_v2_palparkarea B on A.pal_park_area_id = B.id
+        WHERE A.pokemon_species_id = ${pid}
+    </select>
+    <resultMap id="AreaResult" type="PalParkEncounter">
+        <id column="id"/>
+        <result property="rate" column="rate"/>
+        <result property="base_score" column="base_score"/>
+        <association property="area" javaType="PalParkArea">
+            <id property="url" column="areaId"/>
+            <result property="name" column="areaName"/>
+        </association>
+    </resultMap>
+    <select id="selectPokedex" resultMap="PokedexResult">
+        SELECT
+          A.id,
+          A.pokedex_number,
+          A.pokemon_species_id,
+          B.id as pokedexId,
+          B.name as pokedexName
+        FROM pokemon_v2_pokemondexnumber A
+          LEFT JOIN pokemon_v2_pokedex B on A.pokedex_id = B.id
+        WHERE A.pokemon_species_id = ${pid}
+    </select>
+    <resultMap id="PokedexResult" type="PokedexNumber">
+        <id column="id"/>
+        <result property="entry_number" column="pokedex_number"/>
+        <association property="pokedex" javaType="Pokedex">
+            <id property="url" column="pokedexId"/>
+            <result property="name" column="pokedexName"/>
+        </association>
+    </resultMap>
+    <select id="selectDesc" resultMap="DescResult">
+        SELECT
+          A.id,
+          A.description,
+          A.language_id,
+          A.pokemon_species_id,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_pokemonspeciesdescription A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.pokemon_species_id = ${pid}
+    </select>
+    <resultMap id="DescResult" type="Description">
+        <id column="id"/>
+        <result property="description" column="description"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+</mapper>
