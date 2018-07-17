@@ -1,11 +1,11 @@
-package com.example.ssmspringboot2.domain.ability;
+package com.example.ssmspringboot2.domain.move;
 
 import com.example.ssmspringboot2.domain.common.EffectEntry;
 import com.example.ssmspringboot2.domain.link.VersionGroup;
 
 import java.util.List;
 
-public class AbilityEffectChange {
+public class EffectChange {
     private List<EffectEntry> effect_entries;
     private VersionGroup version_group;
 

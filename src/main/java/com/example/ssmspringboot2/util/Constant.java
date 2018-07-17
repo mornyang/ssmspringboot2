@@ -30,4 +30,10 @@ public class Constant {
     public static String eggGroup = "egg-group";
     public static String palParkArea = "pal_park_area";
     public static String pokedex = "pokedex";
+    public static String contestType = "contest-type";
+    public static String contestEffect = "contest-effect";
+    public static String target = "move-target";
+    public static String superContestEffect = "super-contest-effect";
+    public static String moveCategory = "move-category";
+    public static String moveAilment = "move-ailment";
 }

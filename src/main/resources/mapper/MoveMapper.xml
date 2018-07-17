@@ -9,11 +9,46 @@
           A.accuracy,
           A.priority,
           A.move_effect_chance,
+          A.move_effect_id,
           A.name,
           B.id as generationId,
-          B.name as generationName
+          B.name as generationName,
+          C.id as contestTypeId,
+          C.name as contestTypeName,
+          D.id as contestEffectId,
+          E.id as typeId,
+          E.name as typeName,
+          F.id as moveTargetId,
+          F.name as moveTargetName,
+          G.id as superContestEffectId,
+          H.id as moveDamageId,
+          H.name as moveDamageName,
+          I.id as metaId,
+          I.min_hits as metaMinHits,
+          I.max_hits as metaMaxHits,
+          I.min_turns as metaMinTurns,
+          I.max_turns as metaMaxTurns,
+          I.crit_rate as metaCritRate,
+          I.ailment_chance as metaAilmentChance,
+          I.flinch_chance as metaFlinchChance,
+          I.stat_chance as metaStatChance,
+          I.drain as metaDrain,
+          I.healing as metaHealing,
+          J.id as moveCategoryId,
+          J.name as moveCategoryName,
+          K.id as moveAilmentId,
+          K.name as moveAilmentName
         FROM pokemon_v2_move A
           LEFT JOIN pokemon_v2_generation B on A.generation_id = B.id
+          LEFT JOIN pokemon_v2_contesttype C on A.contest_type_id = C.id
+          LEFT JOIN pokemon_v2_contesteffect D on A.contest_effect_id = D.id
+          LEFT JOIN pokemon_v2_type E on A.type_id = E.id
+          LEFT JOIN pokemon_v2_movetarget F on A.move_target_id = F.id
+          LEFT JOIN pokemon_v2_supercontesteffect G on A.super_contest_effect_id = G.id
+          LEFT JOIN pokemon_v2_movedamageclass H on A.move_damage_class_id = H.id
+          LEFT JOIN pokemon_v2_movemeta I on A.id = I.move_id
+          LEFT JOIN pokemon_v2_movemetacategory J on I.move_meta_category_id = J.id
+          LEFT JOIN pokemon_v2_movemetaailment K on I.move_meta_ailment_id = K.id
         WHERE A.id = #{id}
     </select>
     <resultMap id="MoveResult" type="MoveDetail">
@@ -28,5 +63,298 @@
             <id property="url" column="generationId"/>
             <result property="name" column="generationName"/>
         </association>
+        <association property="contest_type" javaType="ContestType">
+            <id property="url" column="contestTypeId"/>
+            <result property="name" column="contestTypeName"/>
+        </association>
+        <association property="contest_effect" javaType="ContestEffect">
+            <id property="url" column="contestEffectId"/>
+        </association>
+        <association property="type" javaType="Type">
+            <id property="url" column="typeId"/>
+            <result property="name" column="typeName"/>
+        </association>
+        <association property="target" javaType="Target">
+            <id property="url" column="moveTargetId"/>
+            <result property="name" column="moveTargetName"/>
+        </association>
+        <association property="super_contest_effect" javaType="SuperContestEffect">
+            <id property="url" column="superContestEffectId"/>
+        </association>
+        <association property="damage_class" javaType="MoveDamageClass">
+            <id property="url" column="moveDamageId"/>
+            <result property="name" column="moveDamageName"/>
+        </association>
+        <association property="meta" javaType="MoveMeta">
+            <id column="metaId"/>
+            <result property="healing" column="metaHealing"/>
+            <result property="drain" column="metaDrain"/>
+            <result property="min_hits" column="metaMinHits"/>
+            <result property="max_hits" column="metaMaxHits"/>
+            <result property="min_turns" column="metaMinTurns"/>
+            <result property="max_turns" column="metaMaxTurns"/>
+            <result property="stat_chance" column="metaStatChance"/>
+            <result property="ailment_chance" column="metaAilmentChance"/>
+            <result property="flinch_chance" column="metaFlinchChance"/>
+            <result property="crit_rate" column="metaCritRate"/>
+            <association property="category" javaType="MoveCategory">
+                <id property="url" column="moveCategoryId"/>
+                <result property="name" column="moveCategoryName"/>
+            </association>
+            <association property="ailment" javaType="MoveAilment">
+                <id property="url" column="moveAilmentId"/>
+                <result property="name" column="moveAilmentName"/>
+            </association>
+        </association>
+        <association property="contest_combos" javaType="ContestCombos">
+            <association property="supers" javaType="ContestCombo">
+                <collection property="use_after" ofType="MoveLink" select="selectSuperAfter" column="mid = id"/>
+                <collection property="use_before" ofType="MoveLink" select="selectSuperBefore" column="mid = id"/>
+            </association>
+            <association property="normal" javaType="ContestCombo">
+                <collection property="use_after" ofType="MoveLink" select="selectNormalAfter" column="mid = id"/>
+                <collection property="use_before" ofType="MoveLink" select="selectNormalBefore" column="mid = id"/>
+            </association>
+        </association>
+        <collection property="names" ofType="Name" select="selectName" column="mid = id"/>
+        <collection property="machines" ofType="MoveMachine" select="selectMachine" column="mid = id"/>
+        <collection property="effect_entries" ofType="ShortEffectEntry" select="selectEffectEntry" column="mid = id"/>
+        <collection property="past_values" ofType="MoveValue" select="selectMoveValue" column="mid = id"/>
+        <collection property="flavor_text_entries" ofType="FlavorTextEntry" select="selectFlavorText" column="mid = id"/>
+        <collection property="stat_changes" ofType="StatChange" select="selectStatChange" column="mid = id"/>
+        <collection property="effect_changes" ofType="EffectChange" select="selectEffectChange" column="mid = move_effect_id"/>
+    </resultMap>
+    <select id="selectName" resultMap="NameResult">
+        SELECT
+          A.id,
+          A.language_id,
+          A.name,
+          A.move_id,
+          B.id as languageId,
+          B.name as LanguageName
+        FROM pokemon_v2_movename A
+          LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.move_id = ${mid};
+    </select>
+    <resultMap id="NameResult" type="Name">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectMachine" resultMap="MachineResult">
+        SELECT
+          A.id,
+          A.machine_number,
+          A.move_id,
+          B.id as versionGroupId,
+          B.name as versionGroupName
+        FROM pokemon_v2_machine A
+          LEFT JOIN pokemon_v2_versiongroup B on A.version_group_id = B.id
+        WHERE A.move_id = ${mid}
+    </select>
+    <resultMap id="MachineResult" type="MoveMachine">
+        <id column="id"/>
+        <association property="machine" javaType="Machine">
+            <id property="url" column="id"/>
+        </association>
+        <association property="version_group" javaType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </association>
+    </resultMap>
+    <select id="selectEffectEntry" resultMap="EffectEntryResult">
+        SELECT
+          C.id,
+          C.short_effect,
+          C.effect,
+          C.language_id,
+          D.id as languageId,
+          D.name as languageName
+        FROM pokemon_v2_move A
+          LEFT JOIN pokemon_v2_moveeffect B on A.move_effect_id = B.id
+          LEFT JOIN pokemon_v2_moveeffecteffecttext C on B.id = C.move_effect_id
+          LEFT JOIN pokemon_v2_language D on C.language_id = D.id
+        WHERE A.id = ${mid}
+    </select>
+    <resultMap id="EffectEntryResult" type="ShortEffectEntry">
+        <id column="id"/>
+        <result property="short_effect" column="short_effect"/>
+        <result property="effect" column="effect"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectMoveValue" resultMap="MoveValueResult">
+        SELECT
+          A.id,
+          A.pp,
+          A.power,
+          A.accuracy,
+          A.move_effect_chance,
+          B.id as typeId,
+          B.name as typeName,
+          C.id as versionGroupId,
+          C.name as versionGroupName,
+          D.id as moveEffectId,
+          D.effect,
+          D.short_effect,
+          D.language_id,
+          E.id as languageId,
+          E.name as languageName
+        FROM pokemon_v2_movechange A
+        LEFT JOIN pokemon_v2_type B on A.type_id = B.id
+        LEFT JOIN pokemon_v2_versiongroup C on A.version_group_id = C.id
+        LEFT JOIN pokemon_v2_moveeffecteffecttext D on A.move_effect_id = D.move_effect_id
+        LEFT JOIN pokemon_v2_language E on D.language_id = E.id
+        WHERE A.move_id = ${mid}
+    </select>
+    <resultMap id="MoveValueResult" type="MoveValue">
+        <id column="id"/>
+        <result property="pp" column="pp"/>
+        <result property="power" column="power"/>
+        <result property="accuracy" column="accuracy"/>
+        <result property="move_effect_chance" column="move_effect_chance"/>
+        <association property="type" javaType="Type">
+            <id property="url" column="typeId"/>
+            <result property="name" column="typeName"/>
+        </association>
+        <association property="version_group" javaType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </association>
+        <collection property="effect_entries" ofType="ShortEffectEntry">
+            <id column="moveEffectId"/>
+            <result property="effect" column="effect"/>
+            <result property="short_effect" column="short_effect"/>
+            <association property="language" javaType="Language">
+                <id property="url" column="languageId"/>
+                <result property="name" column="languageName"/>
+            </association>
+        </collection>
+    </resultMap>
+    <select id="selectFlavorText" resultMap="FlavorTextResult">
+        SELECT
+          A.id,
+          A.flavor_text,
+          B.id as languageId,
+          B.name as languageName,
+          C.id as versionGroupId,
+          C.name as versionGroupName
+        FROM pokemon_v2_moveflavortext A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        LEFT JOIN pokemon_v2_versiongroup C on A.version_group_id = C.id
+        WHERE A.move_id = ${mid}
+    </select>
+    <resultMap id="FlavorTextResult" type="FlavorTextEntry">
+        <id column="id"/>
+        <result property="flavor_text" column="flavor_text"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+        <association property="version_group" javaType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </association>
+    </resultMap>
+    <select id="selectSuperAfter" resultMap="ContestComboResult">
+        SELECT
+          A.id,
+          A.first_move_id,
+          A.second_move_id,
+          B.id as moveId,
+          B.name as moveName
+        FROM pokemon_v2_supercontestcombo A
+          LEFT JOIN pokemon_v2_move B on A.first_move_id = B.id
+        WHERE A.second_move_id = ${mid}
+    </select>
+    <select id="selectSuperBefore" resultMap="ContestComboResult">
+        SELECT
+          A.id,
+          A.first_move_id,
+          A.second_move_id,
+          B.id as moveId,
+          B.name as moveName
+        FROM pokemon_v2_supercontestcombo A
+          LEFT JOIN pokemon_v2_move B on A.second_move_id = B.id
+        WHERE A.first_move_id = ${mid}
+    </select>
+    <select id="selectNormalAfter" resultMap="ContestComboResult">
+        SELECT
+          A.id,
+          A.first_move_id,
+          A.second_move_id,
+          B.id as moveId,
+          B.name as moveName
+        FROM pokemon_v2_contestcombo A
+          LEFT JOIN pokemon_v2_move B on A.first_move_id = B.id
+        WHERE A.second_move_id = ${mid}
+    </select>
+    <select id="selectNormalBefore" resultMap="ContestComboResult">
+        SELECT
+          A.id,
+          A.first_move_id,
+          A.second_move_id,
+          B.id as moveId,
+          B.name as moveName
+        FROM pokemon_v2_contestcombo A
+          LEFT JOIN pokemon_v2_move B on A.second_move_id = B.id
+        WHERE A.first_move_id = ${mid}
+    </select>
+    <resultMap id="ContestComboResult" type="MoveLink">
+        <id property="url" column="moveId"/>
+        <result property="name" column="moveName"/>
+    </resultMap>
+    <select id="selectStatChange" resultMap="StatChangeResult">
+        SELECT
+          A.id,
+          A.change,
+          B.id as statId,
+          B.name as statName
+        FROM pokemon_v2_movemetastatchange A
+        LEFT JOIN pokemon_v2_stat B on A.stat_id = B.id
+        WHERE A.move_id = ${mid}
+    </select>
+    <resultMap id="StatChangeResult" type="StatChange">
+        <id column="id"/>
+        <result property="change" column="change"/>
+        <association property="stat" javaType="Stat">
+            <id property="url" column="statId"/>
+            <result property="name" column="statName"/>
+        </association>
+    </resultMap>
+    <select id="selectEffectChange" resultMap="EffectChangeResult">
+        SELECT
+          A.id,
+          B.id as effectChangeId,
+          B.effect,
+          C.id as languageId,
+          C.name as languageName,
+          D.id as versionGroupId,
+          D.name as versionGroupName
+        FROM pokemon_v2_moveeffectchange A
+        LEFT JOIN pokemon_v2_moveeffectchangeeffecttext B on A.id = B.move_effect_change_id
+        LEFT JOIN pokemon_v2_language C on B.language_id = C.id
+        LEFT JOIN pokemon_v2_versiongroup D on A.version_group_id = D.id
+        WHERE A.move_effect_id = ${mid}
+    </select>
+    <resultMap id="EffectChangeResult" type="EffectChange">
+        <id column="id"/>
+        <association property="version_group" javaType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </association>
+        <collection property="effect_entries" ofType="EffectEntry">
+            <id column="effectChangeId"/>
+            <result property="effect" column="effect"/>
+            <association property="language" javaType="Language">
+                <id property="url" column="languageId"/>
+                <result property="name" column="languageName"/>
+            </association>
+        </collection>
     </resultMap>
 </mapper>

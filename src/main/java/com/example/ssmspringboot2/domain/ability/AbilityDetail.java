@@ -1,5 +1,6 @@
 package com.example.ssmspringboot2.domain.ability;
 
+import com.example.ssmspringboot2.domain.common.EffectEntry;
 import com.example.ssmspringboot2.domain.common.FlavorTextEntry;
 import com.example.ssmspringboot2.domain.link.Generation;
 import com.example.ssmspringboot2.domain.common.Name;
