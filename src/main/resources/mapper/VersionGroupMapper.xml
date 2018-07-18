@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.mapper.VersionGroupMapper">
+    <select id="selectVersionGroupByID" resultMap="VersionGroupResult">
+        SELECT
+          A.id,
+          A."order" as versionGroupOrder,
+          A.name,
+          A.generation_id,
+          B.id as generationId,
+          B.name as generationName,
+          C.id as versionId,
+          C.name as versionName,
+          D.id as regionId,
+          D.name as regionName,
+          F.id as pokedexId,
+          F.name as pokedexName
+        FROM pokemon_v2_versiongroup A
+        LEFT JOIN pokemon_v2_generation B on A.generation_id = B.id
+        LEFT JOIN pokemon_v2_version C on A.id = C.version_group_id
+        LEFT JOIN pokemon_v2_region D on B.region_id = D.id
+        LEFT JOIN pokemon_v2_pokedexversiongroup E on A.id = E.version_group_id
+        LEFT JOIN pokemon_v2_pokedex F on E.pokedex_id = F.id
+        WHERE A.id = #{id}
+    </select>
+    <resultMap id="VersionGroupResult" type="VersionGroupDetail">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="order" column="versionGroupOrder"/>
+        <association property="generation" javaType="Generation">
+            <id property="url" column="generationId"/>
+            <result property="name" column="generationName"/>
+        </association>
+        <collection property="versions" ofType="Version">
+            <id property="url" column="versionId"/>
+            <result property="name" column="versionName"/>
+        </collection>
+        <collection property="regions" ofType="Region">
+            <id property="url" column="regionId"/>
+            <result property="name" column="regionName"/>
+        </collection>
+        <collection property="pokedexes" ofType="Pokedex">
+            <id property="url" column="pokedexId"/>
+            <result property="name" column="pokedexName"/>
+        </collection>
+        <collection property="move_learn_methods" ofType="MoveLearnMethod" select="selectMoveLearnMethod" column="vid = id"/>
+    </resultMap>
+    <select id="selectMoveLearnMethod" resultMap="MoveLearnMethodResult">
+        SELECT
+          A.id,
+          B.id as moveLearnMethodId,
+          B.name
+        FROM pokemon_v2_versiongroupmovelearnmethod A
+        LEFT JOIN pokemon_v2_movelearnmethod B on A.move_learn_method_id = B.id
+        WHERE A.version_group_id = ${vid}
+    </select>
+    <resultMap id="MoveLearnMethodResult" type="MoveLearnMethod">
+        <id property="url" column="moveLearnMethodId"/>
+        <result property="name" column="name"/>
+    </resultMap>
+</mapper>

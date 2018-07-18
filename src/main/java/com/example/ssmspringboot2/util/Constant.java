@@ -36,4 +36,5 @@ public class Constant {
     public static String superContestEffect = "super-contest-effect";
     public static String moveCategory = "move-category";
     public static String moveAilment = "move-ailment";
+    public static String region = "region";
 }
