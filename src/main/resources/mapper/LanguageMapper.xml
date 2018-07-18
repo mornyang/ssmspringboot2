@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.mapper.LanguageMapper">
+    <select id="selectLanguageByID" resultMap="LanguageResult">
+        SELECT
+          A.id,
+          A.iso639,
+          A.iso3166,
+          A.official,
+          A.name,
+          B.id as nameId,
+          B.name as nameName,
+          C.id as languageId,
+          C.name as languageName
+        FROM pokemon_v2_language A
+        LEFT JOIN pokemon_v2_languagename B on A.id = B.language_id
+        LEFT JOIN pokemon_v2_language C on B.local_language_id = C.id
+        WHERE A.id = #{id}
+    </select>
+    <resultMap id="LanguageResult" type="LanguageDetail">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="official" column="official"/>
+        <result property="iso639" column="iso639"/>
+        <result property="iso3166" column="iso3166"/>
+        <collection property="names" ofType="Name">
+            <id column="nameId"/>
+            <result property="name" column="nameName"/>
+            <association property="language" javaType="Language">
+                <id property="url" column="languageId"/>
+                <result property="name" column="languageName"/>
+            </association>
+        </collection>
+    </resultMap>
+</mapper>

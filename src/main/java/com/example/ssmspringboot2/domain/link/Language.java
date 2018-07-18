@@ -25,7 +25,7 @@ public class Language {
 
     @Override
     public String toString(){
-        return "Language{" +
+        return "language{" +
                 "name=" + name +
                 ", url=" + url +
                 "}";
