@@ -16,7 +16,7 @@ public class Characteristic {
 
     @Override
     public String toString() {
-        return "Characteristic{" +
+        return "characteristic{" +
                 "url='" + url + '\'' +
                 '}';
     }

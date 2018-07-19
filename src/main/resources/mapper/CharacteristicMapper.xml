@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.mapper.CharacteristicMapper">
+    <select id="selectCharacteristicByID" resultMap="CharacteristicResult">
+        SELECT
+          A.id,
+          A.gene_mod_5,
+          B.id as statId,
+          B.name as statName
+        FROM pokemon_v2_characteristic A
+          LEFT JOIN pokemon_v2_stat B on A.stat_id = B.id
+        WHERE A.id = #{id}
+    </select>
+    <resultMap id="CharacteristicResult" type="CharacteristicDetail">
+        <id property="id" column="id"/>
+        <result property="gene_modulo" column="gene_mod_5"/>
+        <association property="highest_stat" javaType="Stat">
+            <id property="url" column="statId"/>
+            <result property="name" column="statName"/>
+        </association>
+        <collection property="descriptions" ofType="Description" select="selectDescription" column="cid = id"/>
+            <!--<id column="descriptionId"/>
+            <result property="description" column="description"/>
+            <association property="language" javaType="Language">
+                <id property="url" column="languageId"/>
+                <result property="name" column="languageName"/>
+            </association>
+        </collection>-->
+    </resultMap>
+    <select id="selectDescription" resultMap="DescriptionResult">
+        SELECT
+          A.id,
+          A.description,
+          B.id as languageId,
+          B.name
+        FROM pokemon_v2_characteristicdescription A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.characteristic_id = ${cid}
+    </select>
+    <resultMap id="DescriptionResult" type="Description">
+        <id column="id"/>
+        <result property="description" column="description"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="name"/>
+        </association>
+    </resultMap>
+</mapper>
