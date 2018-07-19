@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.mapper.RegionMapper">
+    <select id="selectRegionByID" resultMap="RegionResult">
+        SELECT
+          A.id,
+          A.name,
+          B.id as generationId,
+          B.name as generationName
+        FROM pokemon_v2_region A
+        LEFT JOIN pokemon_v2_generation B on A.id = B.region_id
+        WHERE A.id = #{id}
+    </select>
+    <resultMap id="RegionResult" type="RegionDetail">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <association property="main_generation" javaType="Generation">
+            <id property="url" column="generationId"/>
+            <result property="name" column="generationName"/>
+        </association>
+    </resultMap>
+</mapper>
