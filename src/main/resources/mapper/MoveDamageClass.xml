@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.mapper.MoveDamageClassMapper">
+    <select id="selectMoveDamageClassByID" resultMap="MoveDamageClassResult">
+        SELECT
+          A.id,
+          A.name,
+          B.id as moveId,
+          B.name as moveName
+        FROM pokemon_v2_movedamageclass A
+          LEFT JOIN pokemon_v2_move B on A.id = B.move_damage_class_id
+        WHERE A.id = #{id}
+    </select>
+    <resultMap id="MoveDamageClassResult" type="MoveDamageClassDetail">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <collection property="moves" ofType="MoveLink">
+            <id property="url" column="moveId"/>
+            <result property="name" column="moveName"/>
+        </collection>
+        <collection property="descriptions" ofType="Description" select="selectDescription" column="mid = id"/>
+        <collection property="names" ofType="Name" select="selectName" column="mid = id"/>
+    </resultMap>
+    <select id="selectDescription" resultMap="DescriptionResult">
+        SELECT
+          A.id,
+          A.description,
+          B.id as languageId,
+          B.name
+        FROM pokemon_v2_movedamageclassdescription A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE move_damage_class_id = ${mid}
+    </select>
+    <resultMap id="DescriptionResult" type="Description">
+        <id column="id"/>
+        <result property="description" column="description"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="name"/>
+        </association>
+    </resultMap>
+    <select id="selectName" resultMap="NameResult">
+        SELECT
+          A.id,
+          A.name,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_movedamageclassname A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE move_damage_class_id = ${mid}
+    </select>
+    <resultMap id="NameResult" type="Name">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+</mapper>
