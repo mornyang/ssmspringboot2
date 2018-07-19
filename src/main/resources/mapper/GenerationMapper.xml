@@ -1,5 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.ssmspringboot2.dao.mapper.GenerationMapper">
-    <select id="selectGenerationByID" resultMap="GenerationResult"></select>
+    <select id="selectGenerationByID" resultMap="GenerationResult">
+        SELECT
+          A.id,
+          A.region_id,
+          A.name,
+          B.id as regionId,
+          B.name as regionName,
+          C.id as versionGroupId,
+          C.name as versionGroupName,
+          D.id as typeId,
+          D.name as typeName
+        FROM pokemon_v2_generation A
+          LEFT JOIN pokemon_v2_region B on A.region_id = B.id
+          LEFT JOIN pokemon_v2_versiongroup C on A.id = C.generation_id
+          LEFT JOIN pokemon_v2_type D on A.id = D.generation_id
+        WHERE A.id = #{id}
+    </select>
+    <resultMap id="GenerationResult" type="GenerationDetail">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <association property="main_region" javaType="Region">
+            <id property="url" column="regionId"/>
+            <result property="name" column="regionName"/>
+        </association>
+        <collection property="version_groups" ofType="VersionGroup">
+            <id property="url" column="versionGroupId"/>
+            <result property="name" column="versionGroupName"/>
+        </collection>
+        <collection property="types" ofType="Type">
+            <id property="url" column="typeId"/>
+            <result property="name" column="typeName"/>
+        </collection>
+        <collection property="abilities" ofType="Ability" select="selectAbility" column="gid = id"/>
+        <collection property="names" ofType="Name" select="selectName" column="gid = id"/>
+        <collection property="pokemon_species" ofType="Species" select="selectSpecies" column="gid = id"/>
+        <collection property="moves" ofType="MoveLink" select="selectMove" column="gid = id"/>
+    </resultMap>
+    <select id="selectAbility" resultMap="AbilityResult">
+        SELECT
+          id,
+          name
+        FROM pokemon_v2_ability
+        WHERE generation_id = ${gid}
+    </select>
+    <resultMap id="AbilityResult" type="Ability">
+        <id property="url" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <select id="selectName" resultMap="NameResult">
+        SELECT
+          A.id,
+          A.name,
+          B.id as languageId,
+          B.name as languageName
+        FROM pokemon_v2_generationname A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.generation_id = ${gid}
+    </select>
+    <resultMap id="NameResult" type="Name">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectSpecies" resultMap="SpeciesResult">
+        SELECT
+          id,
+          name
+        FROM pokemon_v2_pokemonspecies
+        WHERE generation_id = ${gid}
+    </select>
+    <resultMap id="SpeciesResult" type="Species">
+        <id property="url" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <select id="selectMove" resultMap="MoveResult">
+        SELECT
+          id,
+          name
+        FROM pokemon_v2_move
+        WHERE generation_id = ${gid}
+    </select>
+    <resultMap id="MoveResult" type="MoveLink">
+        <id property="url" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
 </mapper>
