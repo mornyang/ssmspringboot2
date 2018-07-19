@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ssmspringboot2.dao.mapper.NatureMapper">
+    <select id="selectNatureByID" resultMap="NatureResult">
+        SELECT
+          A.id,
+          A.name,
+          B.id as hFlavorId,
+          B.name as hFlavorName,
+          C.id as lFlavorId,
+          C.name as lFlavorName,
+          D.id as dStatId,
+          D.name as dStatName,
+          E.id as iStatId,
+          E.name as iStatName
+        FROM pokemon_v2_nature A
+          LEFT JOIN pokemon_v2_berryflavor B on A.hates_flavor_id = B.id
+          LEFT JOIN pokemon_v2_berryflavor C on A.likes_flavor_id = C.id
+          LEFT JOIN pokemon_v2_stat D on A.decreased_stat_id = D.id
+          LEFT JOIN pokemon_v2_stat E on A.increased_stat_id = E.id
+        WHERE A.id = #{id}
+    </select>
+    <resultMap id="NatureResult" type="NatureDetail">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <association property="hates_flavor" javaType="BerryFlavor">
+            <id property="url" column="hFlavorId"/>
+            <result property="name" column="hFlavorName"/>
+        </association>
+        <association property="likes_flavor" javaType="BerryFlavor">
+            <id property="url" column="lFlavorId"/>
+            <result property="name" column="lFlavorName"/>
+        </association>
+        <association property="decreased_stat" javaType="Stat">
+            <id property="url" column="dStatId"/>
+            <result property="name" column="dStatName"/>
+        </association>
+        <association property="increased_stat" javaType="Stat">
+            <id property="url" column="iStatId"/>
+            <result property="name" column="iStatName"/>
+        </association>
+        <collection property="names" ofType="Name" select="selectName" column="nid = id"/>
+        <collection property="pokeathlon_stat_changes" ofType="PokeathlonStatChange" select="selectPokeathlon" column="nid = id"/>
+        <collection property="move_battle_style_preferences" ofType="MoveBattleStylePreferences" select="selectBattleStyle" column="nid = id"/>
+    </resultMap>
+    <select id="selectName" resultMap="NameResult">
+        SELECT
+          A.id,
+          A.name,
+          B.id as languageId,
+          b.name as languageName
+        FROM pokemon_v2_naturename A
+        LEFT JOIN pokemon_v2_language B on A.language_id = B.id
+        WHERE A.nature_id = ${nid}
+    </select>
+    <resultMap id="NameResult" type="Name">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <association property="language" javaType="Language">
+            <id property="url" column="languageId"/>
+            <result property="name" column="languageName"/>
+        </association>
+    </resultMap>
+    <select id="selectBattleStyle" resultMap="BattleStyleResult">
+        SELECT
+          A.id,
+          A.low_hp_preference,
+          A.high_hp_preference,
+          B.id as battleStyleId,
+          B.name as battleStyleName
+        FROM pokemon_v2_naturebattlestylepreference A
+          LEFT JOIN pokemon_v2_movebattlestyle B on A.move_battle_style_id = B.id
+        WHERE A.nature_id = ${nid}
+    </select>
+    <resultMap id="BattleStyleResult" type="MoveBattleStylePreferences">
+        <id column="id"/>
+        <result property="high_hp_preference" column="high_hp_preference"/>
+        <result property="low_hp_preference" column="low_hp_preference"/>
+        <association property="move_battle_style" javaType="MoveBattleStyle">
+            <id property="url" column="battleStyleId"/>
+            <result property="name" column="battleStyleName"/>
+        </association>
+    </resultMap>
+    <select id="selectPokeathlon" resultMap="PokeathlonResult">
+        SELECT
+          A.id,
+          A.max_change,
+          B.id as pokeathlonId,
+          B.name as pokeathlonName
+        FROM pokemon_v2_naturepokeathlonstat A
+        LEFT JOIN pokemon_v2_pokeathlonstat B on A.pokeathlon_stat_id = B.id
+        WHERE A.nature_id = ${nid}
+    </select>
+    <resultMap id="PokeathlonResult" type="PokeathlonStatChange">
+        <id column="id"/>
+        <result property="max_change" column="max_change"/>
+        <association property="pokeathlon_stat" javaType="PokeathlonStat">
+            <id property="url" column="pokeathlonId"/>
+            <result property="name" column="pokeathlonName"/>
+        </association>
+    </resultMap>
+</mapper>

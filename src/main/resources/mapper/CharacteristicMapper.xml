@@ -19,13 +19,6 @@
             <result property="name" column="statName"/>
         </association>
         <collection property="descriptions" ofType="Description" select="selectDescription" column="cid = id"/>
-            <!--<id column="descriptionId"/>
-            <result property="description" column="description"/>
-            <association property="language" javaType="Language">
-                <id property="url" column="languageId"/>
-                <result property="name" column="languageName"/>
-            </association>
-        </collection>-->
     </resultMap>
     <select id="selectDescription" resultMap="DescriptionResult">
         SELECT

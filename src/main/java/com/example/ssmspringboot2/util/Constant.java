@@ -37,4 +37,7 @@ public class Constant {
     public static String moveCategory = "move-category";
     public static String moveAilment = "move-ailment";
     public static String region = "region";
+    public static String berryFlavor = "berry-flavor";
+    public static String moveBattleStyle = "move-battle-style";
+    public static String pokeathlonStat = "pokeathlon-stat";
 }
